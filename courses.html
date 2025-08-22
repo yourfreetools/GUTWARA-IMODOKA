@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="canonical" href="https://icyemezodrive.pages.dev/courses.html">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffc107;
+            color: #1a237e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: #1a237e;
+        }
+        
+        .btn-primary:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Courses Content */
+        .courses {
+            padding: 40px 0;
+        }
+        
+        .courses-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .courses-header h2 {
+            color: #1a237e;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .courses-header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-button {
+            padding: 15px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-button:hover {
+            background: #3949ab;
+        }
+        
+        /* Courses Navigation */
+        .courses-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .course-category {
+            padding: 10px 20px;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #1a237e;
+        }
+        
+        .course-category.active {
+            background: #1a237e;
+            color: white;
+        }
+        
+        .course-category:hover {
+            background: #1a237e;
+            color: white;
+        }
+        
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .course-image {
+            height: 160px;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+        
+        .course-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-number {
+            background: #e8eaf6;
+            color: #1a237e;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .course-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #1a237e;
+        }
+        
+        .course-description {
+            color: #666;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .course-category-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .category-traffic {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .category-signs {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .category-safe {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .category-vehicle {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .course-link {
+            padding: 8px 15px;
+            background: #1a237e;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            text-align: center;
+        }
+        
+        .course-link:hover {
+            background: #3949ab;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        .no-results h3 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+            grid-column: 1 / -1;
+        }
+        
+        .loading i {
+            margin-right: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .courses-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .course-category {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .search-input {
+                border-radius: 10px 10px 0 0;
+            }
+            
+            .search-button {
+                border-radius: 0 0 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                
+                <div class="user-welcome">
+                    <div class="user-avatar" id="user-avatar">JD</div>
+                    <span>Hello, <span id="user-name">John Doe</span></span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html" class="active">Courses</a></li>
+                        <li><a href="practice-tests.html">Practice Tests</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Courses Content -->
+    <section class="courses">
+        <div class="container">
+            <div class="courses-header">
+                <h2>Driving Courses</h2>
+                <p>Learn everything you need to pass your driving test in Rwanda</p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search by course number or title...">
+                    <button class="search-button" id="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="courses-nav">
+                <div class="course-category active" data-category="all">All Courses</div>
+                <div class="course-category" data-category="Traffic Laws">Traffic Laws</div>
+                <div class="course-category" data-category="Road Signs">Road Signs</div>
+                <div class="course-category" data-category="Safe Driving">Safe Driving</div>
+                <div class="course-category" data-category="Vehicle Operation">Vehicle Operation</div>
+            </div>
+            
+            <div class="courses-grid" id="courses-container">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading courses...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="practice-tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 788 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@icyemezodrive.rw</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Get user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('user'));
+        
+        // Check if user is logged in
+        if (!userData) {
+            window.location.href = 'login.html';
+        }
+
+        // Display user information
+        function displayUserInfo() {
+            if (userData) {
+                document.getElementById('user-name').textContent = userData.fullName;
+                const initials = userData.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+                document.getElementById('user-avatar').textContent = initials;
+            }
+        }
+
+        // Get CSS class for category badge
+        function getCategoryClass(category) {
+            switch(category) {
+                case 'Traffic Laws': return 'category-traffic';
+                case 'Road Signs': return 'category-signs';
+                case 'Safe Driving': return 'category-safe';
+                case 'Vehicle Operation': return 'category-vehicle';
+                default: return '';
+            }
+        }
+
+        // Get icon for course based on category
+        function getCourseIcon(category) {
+            switch(category) {
+                case 'Traffic Laws': return 'fas fa-gavel';
+                case 'Road Signs': return 'fas fa-sign';
+                case 'Safe Driving': return 'fas fa-shield-alt';
+                case 'Vehicle Operation': return 'fas fa-cogs';
+                default: return 'fas fa-book';
+            }
+        }
+
+        // Truncate text to specified length
+        function truncateText(text, maxLength = 200) {
+            if (!text) return 'No description available';
+            if (text.length <= maxLength) return text;
+            return text.substr(0, maxLength) + '...';
+        }
+
+        // Display courses
+        function displayCourses(courses) {
+            const coursesContainer = document.getElementById('courses-container');
+            
+            if (!courses || courses.length === 0) {
+                coursesContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No courses found</h3>
+                        <p>There are no courses available at the moment.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let coursesHTML = '';
+            
+            courses.forEach((course) => {
+                // Get first 200 characters of content for description
+                const description = course.content ? truncateText(course.content.replace(/<[^>]*>/g, ''), 200) : 'No description available';
+                const categoryClass = getCategoryClass(course.category);
+                const icon = getCourseIcon(course.category);
+                
+                coursesHTML += `
+                    <div class="course-card">
+                        <div class="course-image">
+                            <i class="${icon}"></i>
+                        </div>
+                        <div class="course-content">
+                            <span class="course-number">${course.courseNumber || 'No Number'}</span>
+                            <h3 class="course-title">${course.title || 'Untitled Course'}</h3>
+                            <p class="course-description">${description}</p>
+                            <div class="course-meta">
+                                <span class="course-category-badge ${categoryClass}">${course.category || 'Uncategorized'}</span>
+                                <a href="readcourse.html?id=${course.id}" class="course-link">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            coursesContainer.innerHTML = coursesHTML;
+        }
+
+        // Load courses from Firestore
+        function loadCourses(category = 'all', searchTerm = '') {
+            const coursesContainer = document.getElementById('courses-container');
+            coursesContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading courses...</div>';
+            
+            db.collection('courses').get().then((querySnapshot) => {
+                const courses = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const courseData = doc.data();
+                    courses.push({
+                        id: doc.id,
+                        ...courseData
+                    });
+                });
+                
+                // Apply filters
+                let filteredCourses = courses;
+                
+                // Apply category filter
+                if (category !== 'all') {
+                    filteredCourses = filteredCourses.filter(course => course.category === category);
+                }
+                
+                // Apply search filter
+                if (searchTerm) {
+                    const searchLower = searchTerm.toLowerCase();
+                    filteredCourses = filteredCourses.filter(course => {
+                        const matchesNumber = course.courseNumber && course.courseNumber.toLowerCase().includes(searchLower);
+                        const matchesTitle = course.title && course.title.toLowerCase().includes(searchLower);
+                        return matchesNumber || matchesTitle;
+                    });
+                }
+                
+                // Display the filtered courses
+                displayCourses(filteredCourses);
+                
+            }).catch((error) => {
+                console.error("Error loading courses: ", error);
+                coursesContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error loading courses</h3>
+                        <p>Please check your console for details or try again later.</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Set up category filters
+        function setupCategoryFilters() {
+            document.querySelectorAll('.course-category').forEach(category => {
+                category.addEventListener('click', () => {
+                    document.querySelectorAll('.course-category').forEach(c => c.classList.remove('active'));
+                    category.classList.add('active');
+                    const searchTerm = document.getElementById('search-input').value;
+                    loadCourses(category.dataset.category, searchTerm);
+                });
+            });
+        }
+
+        // Set up search functionality
+        function setupSearch() {
+            document.getElementById('search-button').addEventListener('click', () => {
+                const searchTerm = document.getElementById('search-input').value;
+                const activeCategory = document.querySelector('.course-category.active').dataset.category;
+                loadCourses(activeCategory, searchTerm);
+            });
+
+            // Search on Enter key press
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const searchTerm = document.getElementById('search-input').value;
+                    const activeCategory = document.querySelector('.course-category.active').dataset.category;
+                    loadCourses(activeCategory, searchTerm);
+                }
+            });
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize the page
+        function initPage() {
+            displayUserInfo();
+            setupCategoryFilters();
+            setupSearch();
+            loadCourses();
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
