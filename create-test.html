@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: #1a237e;
+        }
+        
+        .btn-primary:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-creator {
+            background: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title {
+            color: #1a237e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        .minutes-input {
+            max-width: 100px;
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #1a237e;
+        }
+        
+        .delete-question {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .option-letter {
+            font-weight: bold;
+            color: #1a237e;
+            min-width: 25px;
+        }
+        
+        .option-input {
+            flex: 1;
+        }
+        
+        .correct-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .add-option-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-question-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .test-summary {
+            background: #e8f4fd;
+            border-left: 4px solid #1a237e;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .test-summary h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: #3949ab;
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .notification {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .notification.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .notification.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .test-creator {
+                padding: 20px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .option-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .option-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-car"></i>
+                <h1>Icyemezo Drive - Test Creator</h1>
+            </div>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" onclick="location.href='courses.html'">Back to Courses</button>
+                <button class="btn btn-primary" onclick="location.href='index.html'">Home</button>
+            </div>
+        </header>
+
+        <div class="test-creator">
+            <h2 class="section-title"><i class="fas fa-plus-circle"></i> Create New Test</h2>
+            
+            <div id="notification" class="notification">
+                <span id="notification-message"></span>
+            </div>
+            
+            <div class="section">
+                <div class="form-group">
+                    <label for="testTitle">Test Title</label>
+                    <input type="text" id="testTitle" class="form-control" placeholder="Enter test title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="testDescription">Test Description</label>
+                    <textarea id="testDescription" class="form-control" placeholder="Enter test description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="testMinutes">Time Limit (minutes)</label>
+                    <input type="number" id="testMinutes" class="form-control minutes-input" placeholder="Minutes" min="1" required>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-title"><i class="fas fa-question-circle"></i> Questions</h3>
+                
+                <div id="questions-container">
+                    <!-- Questions will be added here dynamically -->
+                </div>
+                
+                <button id="add-question-btn" class="add-question-btn">
+                    <i class="fas fa-plus"></i> Add Question
+                </button>
+                
+                <div class="test-summary">
+                    <h3>Test Summary</h3>
+                    <p>Total Questions: <span id="total-questions">0</span></p>
+                    <p>Total Marks: <span id="total-marks">0</span></p>
+                    <p>Time Limit: <span id="time-limit">0</span> minutes</p>
+                </div>
+            </div>
+            
+            <button id="submit-btn" class="submit-btn">Create Test</button>
+        </div>
+    </div>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Global variables
+        let questionCount = 0;
+        let questions = [];
+
+        // Show notification message
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
+            
+            messageEl.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Update test summary
+        function updateTestSummary() {
+            document.getElementById('total-questions').textContent = questionCount;
+            document.getElementById('total-marks').textContent = questionCount; // 1 mark per question
+            document.getElementById('time-limit').textContent = document.getElementById('testMinutes').value || '0';
+        }
+
+        // Add a new question
+        function addQuestion() {
+            questionCount++;
+            const questionId = `question-${questionCount}`;
+            
+            const questionHTML = `
+                <div class="question-card" id="${questionId}">
+                    <div class="question-header">
+                        <span class="question-number">Question ${questionCount}</span>
+                        <button class="delete-question" onclick="deleteQuestion('${questionId}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-${questionCount}-text">Question Text</label>
+                        <input type="text" class="form-control question-text" placeholder="Enter question text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Options</label>
+                        <div class="options-container" id="options-${questionCount}">
+                            <div class="option-item">
+                                <span class="option-letter">A</span>
+                                <input type="text" class="form-control option-input" placeholder="Option A" required>
+                                <div class="correct-option" onclick="setCorrectOption(this, '${questionId}')">
+                                    <input type="radio" name="correct-${questionCount}" value="0" required>
+                                    <span>Correct</span>
+                                </div>
+                            </div>
+                            <div class="option-item">
+                                <span class="option-letter">B</span>
+                                <input type="text" class="form-control option-input" placeholder="Option B" required>
+                                <div class="correct-option" onclick="setCorrectOption(this, '${questionId}')">
+                                    <input type="radio" name="correct-${questionCount}" value="1">
+                                    <span>Correct</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="add-option-btn" onclick="addOption('${questionId}')">
+                            <i class="fas fa-plus"></i> Add Option
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('questions-container').insertAdjacentHTML('beforeend', questionHTML);
+            updateTestSummary();
+        }
+
+        // Delete a question
+        function deleteQuestion(questionId) {
+            const questionElement = document.getElementById(questionId);
+            questionElement.remove();
+            questionCount--;
+            updateTestSummary();
+        }
+
+        // Add an option to a question
+        function addOption(questionId) {
+            const questionNumber = questionId.split('-')[1];
+            const optionsContainer = document.getElementById(`options-${questionNumber}`);
+            const optionCount = optionsContainer.children.length;
+            const optionLetter = String.fromCharCode(65 + optionCount); // A, B, C, etc.
+            
+            const optionHTML = `
+                <div class="option-item">
+                    <span class="option-letter">${optionLetter}</span>
+                    <input type="text" class="form-control option-input" placeholder="Option ${optionLetter}" required>
+                    <div class="correct-option" onclick="setCorrectOption(this, '${questionId}')">
+                        <input type="radio" name="correct-${questionNumber}" value="${optionCount}">
+                        <span>Correct</span>
+                    </div>
+                </div>
+            `;
+            
+            optionsContainer.insertAdjacentHTML('beforeend', optionHTML);
+        }
+
+        // Set the correct option
+        function setCorrectOption(element, questionId) {
+            const radioInput = element.querySelector('input[type="radio"]');
+            radioInput.checked = true;
+        }
+
+        // Collect all test data
+        function collectTestData() {
+            const testTitle = document.getElementById('testTitle').value;
+            const testDescription = document.getElementById('testDescription').value;
+            const testMinutes = parseInt(document.getElementById('testMinutes').value);
+            
+            if (!testTitle || !testMinutes || questionCount === 0) {
+                showNotification('Please fill all required fields and add at least one question', 'error');
+                return null;
+            }
+            
+            const questions = [];
+            const questionElements = document.querySelectorAll('.question-card');
+            
+            for (let i = 0; i < questionElements.length; i++) {
+                const questionElement = questionElements[i];
+                const questionText = questionElement.querySelector('.question-text').value;
+                const options = [];
+                const optionInputs = questionElement.querySelectorAll('.option-input');
+                const correctOptionIndex = parseInt(questionElement.querySelector('input[type="radio"]:checked').value);
+                
+                for (let j = 0; j < optionInputs.length; j++) {
+                    options.push(optionInputs[j].value);
+                }
+                
+                if (!questionText || options.some(opt => !opt) || isNaN(correctOptionIndex)) {
+                    showNotification('Please fill all question fields and select correct answers', 'error');
+                    return null;
+                }
+                
+                questions.push({
+                    text: questionText,
+                    options: options,
+                    correctOption: correctOptionIndex
+                });
+            }
+            
+            return {
+                title: testTitle,
+                description: testDescription,
+                timeLimit: testMinutes,
+                questions: questions,
+                totalMarks: questions.length,
+                createdAt: new Date().toISOString()
+            };
+        }
+
+        // Save test to Firestore
+        async function saveTestToFirestore(testData) {
+            try {
+                // Generate a unique ID for the test
+                const testId = testData.title.toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9-]/g, '')
+                    .substring(0, 30) + '-' + Date.now().toString().slice(-4);
+                
+                // Store test data in Firestore
+                await db.collection('practiceTests').doc(testId).set(testData);
+                
+                return testId;
+            } catch (error) {
+                console.error('Error saving test:', error);
+                throw error;
+            }
+        }
+
+        // Handle form submission
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Test...';
+            
+            try {
+                const testData = collectTestData();
+                if (!testData) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Test';
+                    return;
+                }
+                
+                const testId = await saveTestToFirestore(testData);
+                
+                showNotification('Test created successfully!', 'success');
+                
+                // Reset form
+                document.getElementById('testTitle').value = '';
+                document.getElementById('testDescription').value = '';
+                document.getElementById('testMinutes').value = '';
+                document.getElementById('questions-container').innerHTML = '';
+                questionCount = 0;
+                updateTestSummary();
+                
+            } catch (error) {
+                console.error('Error creating test:', error);
+                showNotification('Error creating test: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Test';
+            }
+        }
+
+        // Initialize the page
+        function initPage() {
+            // Add event listeners
+            document.getElementById('add-question-btn').addEventListener('click', addQuestion);
+            document.getElementById('submit-btn').addEventListener('click', handleSubmit);
+            
+            // Add the first question automatically
+            addQuestion();
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
