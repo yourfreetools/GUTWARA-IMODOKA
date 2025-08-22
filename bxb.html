@@ -363,16 +363,6 @@
             margin-right: 10px;
         }
         
-        .debug-info {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 20px 0;
-            color: #856404;
-            display: none;
-        }
-        
         /* Footer */
         footer {
             background: #1a237e;
@@ -512,12 +502,6 @@
                 <p>Learn everything you need to pass your driving test in Rwanda</p>
             </div>
             
-            <!-- Debug info (hidden by default) -->
-            <div class="debug-info" id="debug-info">
-                <h3><i class="fas fa-bug"></i> Debug Information</h3>
-                <p id="debug-content">Loading debug information...</p>
-            </div>
-            
             <!-- Search Bar -->
             <div class="search-container">
                 <div class="search-box">
@@ -614,11 +598,13 @@
             window.location.href = 'login.html';
         }
 
-        // Display user information
-        if (userData) {
-            document.getElementById('user-name').textContent = userData.fullName;
-            const initials = userData.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
-            document.getElementById('user-avatar').textContent = initials;
+        // Display user information - using the same pattern as user display
+        function displayUserInfo() {
+            if (userData) {
+                document.getElementById('user-name').textContent = userData.fullName;
+                const initials = userData.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+                document.getElementById('user-avatar').textContent = initials;
+            }
         }
 
         // Get CSS class for category badge
@@ -650,147 +636,145 @@
             return text.substr(0, maxLength) + '...';
         }
 
-        // Show debug information
-        function showDebugInfo(info) {
-            const debugEl = document.getElementById('debug-info');
-            const debugContent = document.getElementById('debug-content');
+        // Display courses - using a similar pattern to user display
+        function displayCourses(courses) {
+            const coursesContainer = document.getElementById('courses-container');
             
-            debugContent.textContent = info;
-            debugEl.style.display = 'block';
+            if (!courses || courses.length === 0) {
+                coursesContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No courses found</h3>
+                        <p>There are no courses available at the moment.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let coursesHTML = '';
+            
+            courses.forEach((course) => {
+                // Get first 200 characters of content for description
+                const description = course.content ? truncateText(course.content.replace(/<[^>]*>/g, ''), 200) : 'No description available';
+                const categoryClass = getCategoryClass(course.category);
+                const icon = getCourseIcon(course.category);
+                
+                coursesHTML += `
+                    <div class="course-card">
+                        <div class="course-image">
+                            <i class="${icon}"></i>
+                        </div>
+                        <div class="course-content">
+                            <span class="course-number">${course.courseNumber || 'No Number'}</span>
+                            <h3 class="course-title">${course.title || 'Untitled Course'}</h3>
+                            <p class="course-description">${description}</p>
+                            <div class="course-meta">
+                                <span class="course-category-badge ${categoryClass}">${course.category || 'Uncategorized'}</span>
+                                <a href="readcourse.html?id=${course.id}" class="course-link">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            coursesContainer.innerHTML = coursesHTML;
         }
 
-        // Load courses from Firestore
+        // Load courses from Firestore - using a similar pattern to user data loading
         function loadCourses(category = 'all', searchTerm = '') {
             const coursesContainer = document.getElementById('courses-container');
             coursesContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading courses...</div>';
             
-            // Show debug info
-            showDebugInfo(`Loading courses with category: ${category}, search: ${searchTerm}`);
-            
-            // Try to get courses with error handling
             db.collection('courses').get().then((querySnapshot) => {
-                console.log("Firestore query successful, processing results...");
-                showDebugInfo(`Found ${querySnapshot.size} courses in database`);
-                
-                if (querySnapshot.empty) {
-                    coursesContainer.innerHTML = '<div class="no-results"><i class="fas fa-book-open"></i><h3>No courses found</h3><p>There are no courses available at the moment.</p></div>';
-                    return;
-                }
-                
-                let coursesHTML = '';
-                let hasResults = false;
-                let courseCount = 0;
+                const courses = [];
                 
                 querySnapshot.forEach((doc) => {
-                    const course = doc.data();
-                    const courseId = doc.id;
-                    
-                    // Log course data for debugging
-                    console.log("Course data:", course);
-                    
-                    // Apply category filter
-                    if (category !== 'all' && course.category !== category) {
-                        return;
-                    }
-                    
-                    // Apply search filter
-                    if (searchTerm) {
-                        const searchLower = searchTerm.toLowerCase();
-                        const matchesNumber = course.courseNumber && course.courseNumber.toLowerCase().includes(searchLower);
-                        const matchesTitle = course.title && course.title.toLowerCase().includes(searchLower);
-                        
-                        if (!matchesNumber && !matchesTitle) {
-                            return;
-                        }
-                    }
-                    
-                    hasResults = true;
-                    courseCount++;
-                    
-                    // Get first 200 characters of content for description
-                    const description = course.content ? truncateText(course.content.replace(/<[^>]*>/g, ''), 200) : 'No description available';
-                    const categoryClass = getCategoryClass(course.category);
-                    const icon = getCourseIcon(course.category);
-                    
-                    coursesHTML += `
-                        <div class="course-card">
-                            <div class="course-image">
-                                <i class="${icon}"></i>
-                            </div>
-                            <div class="course-content">
-                                <span class="course-number">${course.courseNumber || 'No Number'}</span>
-                                <h3 class="course-title">${course.title || 'Untitled Course'}</h3>
-                                <p class="course-description">${description}</p>
-                                <div class="course-meta">
-                                    <span class="course-category-badge ${categoryClass}">${course.category || 'Uncategorized'}</span>
-                                    <a href="readcourse.html?id=${courseId}" class="course-link">View Course</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                    const courseData = doc.data();
+                    courses.push({
+                        id: doc.id,
+                        ...courseData
+                    });
                 });
                 
-                showDebugInfo(`Found ${courseCount} courses matching filters`);
+                // Apply filters
+                let filteredCourses = courses;
                 
-                if (!hasResults) {
-                    coursesContainer.innerHTML = `
-                        <div class="no-results">
-                            <i class="fas fa-search"></i>
-                            <h3>No courses found</h3>
-                            <p>Try a different search term or category</p>
-                        </div>
-                    `;
-                } else {
-                    coursesContainer.innerHTML = coursesHTML;
+                // Apply category filter
+                if (category !== 'all') {
+                    filteredCourses = filteredCourses.filter(course => course.category === category);
                 }
+                
+                // Apply search filter
+                if (searchTerm) {
+                    const searchLower = searchTerm.toLowerCase();
+                    filteredCourses = filteredCourses.filter(course => {
+                        const matchesNumber = course.courseNumber && course.courseNumber.toLowerCase().includes(searchLower);
+                        const matchesTitle = course.title && course.title.toLowerCase().includes(searchLower);
+                        return matchesNumber || matchesTitle;
+                    });
+                }
+                
+                // Display the filtered courses
+                displayCourses(filteredCourses);
+                
             }).catch((error) => {
                 console.error("Error loading courses: ", error);
-                showDebugInfo(`Error loading courses: ${error.message}`);
                 coursesContainer.innerHTML = `
                     <div class="no-results">
                         <i class="fas fa-exclamation-triangle"></i>
                         <h3>Error loading courses</h3>
                         <p>Please check your console for details or try again later.</p>
-                        <p><small>Error: ${error.message}</small></p>
                     </div>
                 `;
             });
         }
 
         // Set up category filters
-        document.querySelectorAll('.course-category').forEach(category => {
-            category.addEventListener('click', () => {
-                document.querySelectorAll('.course-category').forEach(c => c.classList.remove('active'));
-                category.classList.add('active');
-                const searchTerm = document.getElementById('search-input').value;
-                loadCourses(category.dataset.category, searchTerm);
+        function setupCategoryFilters() {
+            document.querySelectorAll('.course-category').forEach(category => {
+                category.addEventListener('click', () => {
+                    document.querySelectorAll('.course-category').forEach(c => c.classList.remove('active'));
+                    category.classList.add('active');
+                    const searchTerm = document.getElementById('search-input').value;
+                    loadCourses(category.dataset.category, searchTerm);
+                });
             });
-        });
+        }
 
         // Set up search functionality
-        document.getElementById('search-button').addEventListener('click', () => {
-            const searchTerm = document.getElementById('search-input').value;
-            const activeCategory = document.querySelector('.course-category.active').dataset.category;
-            loadCourses(activeCategory, searchTerm);
-        });
-
-        // Search on Enter key press
-        document.getElementById('search-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+        function setupSearch() {
+            document.getElementById('search-button').addEventListener('click', () => {
                 const searchTerm = document.getElementById('search-input').value;
                 const activeCategory = document.querySelector('.course-category.active').dataset.category;
                 loadCourses(activeCategory, searchTerm);
-            }
-        });
+            });
 
-        // Initial load
-        loadCourses();
+            // Search on Enter key press
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const searchTerm = document.getElementById('search-input').value;
+                    const activeCategory = document.querySelector('.course-category.active').dataset.category;
+                    loadCourses(activeCategory, searchTerm);
+                }
+            });
+        }
 
         // Logout function
         function logout() {
             localStorage.removeItem('user');
             window.location.href = 'index.html';
         }
+
+        // Initialize the page
+        function initPage() {
+            displayUserInfo();
+            setupCategoryFilters();
+            setupSearch();
+            loadCourses();
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
-                    </html>
+    </html>
