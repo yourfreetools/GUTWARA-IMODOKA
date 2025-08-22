@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="canonical" href="https://icyemezodrive.pages.dev/create-course.html">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: #1a237e;
+        }
+        
+        .btn-primary:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 0;
+        }
+        
+        .course-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .course-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .course-header h2 {
+            color: #1a237e;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .course-header p {
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #3949ab;
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .notification {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .notification.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .notification.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .course-link {
+            background-color: #e8f4fd;
+            border-left: 4px solid #1a237e;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .course-link h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        
+        .course-link a {
+            color: #1a237e;
+            word-break: break-all;
+            font-weight: 500;
+        }
+        
+        /* Courses List */
+        .courses-list {
+            margin-top: 40px;
+        }
+        
+        .courses-list h3 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1a237e;
+        }
+        
+        .course-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .course-info h4 {
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+        
+        .course-info p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .course-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .course-actions a {
+            color: #1a237e;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .course-actions a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .course-container {
+                padding: 30px 20px;
+            }
+            
+            .course-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .course-actions {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="location.href='login.html'">Login</button>
+                    <button class="btn btn-primary" onclick="location.href='signup.html'">Create Account</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="course-container">
+                <div class="course-header">
+                    <h2>Create New Course</h2>
+                    <p>Add a new driving course to the platform</p>
+                </div>
+                
+                <div id="notification" class="notification">
+                    <span id="notification-message"></span>
+                </div>
+                
+                <div id="course-link" class="course-link">
+                    <h3>Course Created Successfully!</h3>
+                    <p>Your course is now available at: <a id="course-url" href="#" target="_blank"></a></p>
+                </div>
+                
+                <form id="course-form">
+                    <div class="form-group">
+                        <label for="courseNumber">Course Number</label>
+                        <input type="text" id="courseNumber" class="form-control" placeholder="e.g., DRV101" required>
+                        <p class="form-hint">Unique identifier for the course</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" id="courseTitle" class="form-control" placeholder="Enter course title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="courseContent">Course Content</label>
+                        <textarea id="courseContent" class="form-control" placeholder="Enter the course content here..." required></textarea>
+                        <p class="form-hint">You can use HTML formatting in the content</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="isPublic">
+                            <input type="checkbox" id="isPublic" checked>
+                            Make this course publicly accessible
+                        </label>
+                        <p class="form-hint">If unchecked, only subscribed users can view this course</p>
+                    </div>
+                    
+                    <button type="submit" id="submit-btn" class="submit-btn">Create Course</button>
+                </form>
+            </div>
+            
+            <div class="course-container courses-list">
+                <h3>Existing Courses</h3>
+                <div id="courses-container">
+                    <p>Loading courses...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="practice-tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 788 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@icyemezodrive.rw</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Generate a unique URL-friendly ID
+        function generateCourseId(title) {
+            // Convert to lowercase, replace spaces with hyphens, remove special chars
+            return title.toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '')
+                .substring(0, 30) + '-' + Date.now().toString().slice(-4);
+        }
+
+        // Show notification message
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
+            
+            messageEl.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Handle form submission
+        document.getElementById('course-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const courseNumber = document.getElementById('courseNumber').value;
+            const courseTitle = document.getElementById('courseTitle').value;
+            const courseContent = document.getElementById('courseContent').value;
+            const isPublic = document.getElementById('isPublic').checked;
+            const courseId = generateCourseId(courseTitle);
+            const creationDate = new Date().toISOString();
+            
+            // Disable submit button to prevent multiple submissions
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Course...';
+            
+            try {
+                // Store course data in Firestore
+                await db.collection('courses').doc(courseId).set({
+                    courseNumber: courseNumber,
+                    title: courseTitle,
+                    content: courseContent,
+                    public: isPublic,
+                    creationDate: creationDate,
+                    url: `course-${courseId}`
+                });
+                
+                // Show success message with course link
+                const courseUrl = `course-${courseId}.html`;
+                document.getElementById('course-url').textContent = courseUrl;
+                document.getElementById('course-url').href = courseUrl;
+                document.getElementById('course-link').style.display = 'block';
+                
+                showNotification('Course created successfully!', 'success');
+                
+                // Reset form
+                document.getElementById('course-form').reset();
+                
+                // Reload courses list
+                loadCourses();
+                
+            } catch (error) {
+                console.error('Error creating course:', error);
+                showNotification('Error creating course: ' + error.message, 'error');
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Course';
+            }
+        });
+
+        // Load and display existing courses
+        async function loadCourses() {
+            try {
+                const coursesContainer = document.getElementById('courses-container');
+                coursesContainer.innerHTML = '<p>Loading courses...</p>';
+                
+                const snapshot = await db.collection('courses').orderBy('creationDate', 'desc').get();
+                
+                if (snapshot.empty) {
+                    coursesContainer.innerHTML = '<p>No courses found. Create your first course above.</p>';
+                    return;
+                }
+                
+                let coursesHTML = '';
+                snapshot.forEach(doc => {
+                    const course = doc.data();
+                    coursesHTML += `
+                        <div class="course-item">
+                            <div class="course-info">
+                                <h4>${course.courseNumber}: ${course.title}</h4>
+                                <p>Created: ${new Date(course.creationDate).toLocaleDateString()}</p>
+                                <p>Status: ${course.public ? 'Public' : 'Subscribers Only'}</p>
+                            </div>
+                            <div class="course-actions">
+                                <a href="${course.url}.html" target="_blank">View Course</a>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                coursesContainer.innerHTML = coursesHTML;
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                document.getElementById('courses-container').innerHTML = '<p>Error loading courses. Please try again later.</p>';
+            }
+        }
+
+        // Load courses when page loads
+        document.addEventListener('DOMContentLoaded', loadCourses);
+    </script>
+</body>
+</html>
