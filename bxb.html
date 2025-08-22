@@ -363,6 +363,16 @@
             margin-right: 10px;
         }
         
+        .debug-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+            display: none;
+        }
+        
         /* Footer */
         footer {
             background: #1a237e;
@@ -502,6 +512,12 @@
                 <p>Learn everything you need to pass your driving test in Rwanda</p>
             </div>
             
+            <!-- Debug info (hidden by default) -->
+            <div class="debug-info" id="debug-info">
+                <h3><i class="fas fa-bug"></i> Debug Information</h3>
+                <p id="debug-content">Loading debug information...</p>
+            </div>
+            
             <!-- Search Bar -->
             <div class="search-container">
                 <div class="search-box">
@@ -593,7 +609,7 @@
         // Get user data from localStorage
         const userData = JSON.parse(localStorage.getItem('user'));
         
-        // Check if user is logged in and has active subscription
+        // Check if user is logged in
         if (!userData) {
             window.location.href = 'login.html';
         }
@@ -629,8 +645,18 @@
 
         // Truncate text to specified length
         function truncateText(text, maxLength = 200) {
+            if (!text) return 'No description available';
             if (text.length <= maxLength) return text;
             return text.substr(0, maxLength) + '...';
+        }
+
+        // Show debug information
+        function showDebugInfo(info) {
+            const debugEl = document.getElementById('debug-info');
+            const debugContent = document.getElementById('debug-content');
+            
+            debugContent.textContent = info;
+            debugEl.style.display = 'block';
         }
 
         // Load courses from Firestore
@@ -638,7 +664,14 @@
             const coursesContainer = document.getElementById('courses-container');
             coursesContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading courses...</div>';
             
-            db.collection('courses').orderBy('courseNumber').get().then((querySnapshot) => {
+            // Show debug info
+            showDebugInfo(`Loading courses with category: ${category}, search: ${searchTerm}`);
+            
+            // Try to get courses with error handling
+            db.collection('courses').get().then((querySnapshot) => {
+                console.log("Firestore query successful, processing results...");
+                showDebugInfo(`Found ${querySnapshot.size} courses in database`);
+                
                 if (querySnapshot.empty) {
                     coursesContainer.innerHTML = '<div class="no-results"><i class="fas fa-book-open"></i><h3>No courses found</h3><p>There are no courses available at the moment.</p></div>';
                     return;
@@ -646,10 +679,14 @@
                 
                 let coursesHTML = '';
                 let hasResults = false;
+                let courseCount = 0;
                 
                 querySnapshot.forEach((doc) => {
                     const course = doc.data();
                     const courseId = doc.id;
+                    
+                    // Log course data for debugging
+                    console.log("Course data:", course);
                     
                     // Apply category filter
                     if (category !== 'all' && course.category !== category) {
@@ -668,6 +705,7 @@
                     }
                     
                     hasResults = true;
+                    courseCount++;
                     
                     // Get first 200 characters of content for description
                     const description = course.content ? truncateText(course.content.replace(/<[^>]*>/g, ''), 200) : 'No description available';
@@ -680,17 +718,19 @@
                                 <i class="${icon}"></i>
                             </div>
                             <div class="course-content">
-                                <span class="course-number">${course.courseNumber}</span>
-                                <h3 class="course-title">${course.title}</h3>
+                                <span class="course-number">${course.courseNumber || 'No Number'}</span>
+                                <h3 class="course-title">${course.title || 'Untitled Course'}</h3>
                                 <p class="course-description">${description}</p>
                                 <div class="course-meta">
-                                    <span class="course-category-badge ${categoryClass}">${course.category}</span>
+                                    <span class="course-category-badge ${categoryClass}">${course.category || 'Uncategorized'}</span>
                                     <a href="readcourse.html?id=${courseId}" class="course-link">View Course</a>
                                 </div>
                             </div>
                         </div>
                     `;
                 });
+                
+                showDebugInfo(`Found ${courseCount} courses matching filters`);
                 
                 if (!hasResults) {
                     coursesContainer.innerHTML = `
@@ -705,7 +745,15 @@
                 }
             }).catch((error) => {
                 console.error("Error loading courses: ", error);
-                coursesContainer.innerHTML = '<div class="loading">Error loading courses. Please try again later.</div>';
+                showDebugInfo(`Error loading courses: ${error.message}`);
+                coursesContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error loading courses</h3>
+                        <p>Please check your console for details or try again later.</p>
+                        <p><small>Error: ${error.message}</small></p>
+                    </div>
+                `;
             });
         }
 
@@ -745,4 +793,4 @@
         }
     </script>
 </body>
-</html>
+                    </html>
