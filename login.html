@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-RW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login to Your Account</title>
+    <title>Login - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="canonical" href="https://icyemezodrive.pages.dev/login.html">
     <style>
         * {
             margin: 0;
@@ -13,30 +15,138 @@
         }
         
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            flex-direction: column;
         }
         
         .container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 450px;
-            padding: 40px;
-            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        .login-form h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-weight: 600;
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
             font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: #1a237e;
+        }
+        
+        .btn-primary:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h2 {
+            color: #1a237e;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
         }
         
         .form-group {
@@ -47,61 +157,58 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: #555;
+            color: #333;
         }
         
-        .form-group input {
+        .form-control {
             width: 100%;
-            padding: 15px;
+            padding: 12px 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 16px;
-            transition: border 0.3s;
+            transition: border-color 0.3s;
         }
         
-        .form-group input:focus {
-            border-color: #4a86e8;
+        .form-control:focus {
+            border-color: #1a237e;
             outline: none;
-            box-shadow: 0 0 0 2px rgba(74, 134, 232, 0.2);
         }
         
-        .btn {
+        .form-hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .submit-btn {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            border: none;
-            border-radius: 8px;
+            padding: 14px;
+            background: #1a237e;
             color: white;
-            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: background 0.3s;
         }
         
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .submit-btn:hover {
+            background: #3949ab;
         }
         
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .btn:disabled {
-            background: #cccccc;
+        .submit-btn:disabled {
+            background: #ccc;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
         
         .signup-link {
             text-align: center;
-            margin-top: 25px;
-            color: #666;
+            margin-top: 20px;
         }
         
         .signup-link a {
-            color: #2575fc;
+            color: #1a237e;
             text-decoration: none;
             font-weight: 500;
         }
@@ -111,87 +218,232 @@
         }
         
         .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 1000;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
         }
         
         .notification.success {
-            background-color: #4caf50;
-            opacity: 1;
-            transform: translateY(0);
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
         
         .notification.error {
-            background-color: #f44336;
-            opacity: 1;
-            transform: translateY(0);
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
         
-        .loader {
+        .support-info {
+            background-color: #e8f4fd;
+            border-left: 4px solid #1a237e;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
             display: none;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
+        }
+        
+        .support-info h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+        
+        .support-info p {
+            margin-bottom: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -12px;
-            margin-left: -12px;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .footer-column ul {
+            list-style: none;
         }
         
-        @media (max-width: 480px) {
-            .container {
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .login-container {
                 padding: 30px 20px;
             }
         }
     </style>
-    
-    <!-- Firebase App (core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js"></script>
-    <!-- Firebase Firestore -->
-    <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js"></script>
 </head>
 <body>
-    <div class="container">
-        <form class="login-form" id="loginForm">
-            <h2>Login to Your Account</h2>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-primary" onclick="location.href='login.html'">Login</button>
+                    <button class="btn btn-outline" onclick="location.href='signup.html'">Create Account</button>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-            
-            <button type="submit" class="btn" id="submitBtn">Login</button>
-            <div class="loader" id="loader"></div>
-            
-            <div class="signup-link">
-                Don't have an account? <a href="signup.html">Sign Up</a>
-            </div>
-        </form>
-    </div>
+        </div>
+    </header>
 
-    <div class="notification" id="notification"></div>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2>Login to Your Account</h2>
+                    <p>Access your driving courses and practice tests</p>
+                </div>
+                
+                <div id="notification" class="notification">
+                    <span id="notification-message"></span>
+                </div>
+                
+                <div id="support-info" class="support-info">
+                    <h3>Need Help?</h3>
+                    <p>If you don't know your password, please contact us at:</p>
+                    <p><i class="fas fa-phone"></i> <strong>+250 788 123 456</strong></p>
+                    <p>We'll verify your payment and provide your password.</p>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" class="form-control" placeholder="Enter your phone number" required>
+                        <p class="form-hint">Format: 07XX XXX XXX or +2507XX XXX XXX</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                        <p class="form-hint">Contact us if you don't have your password</p>
+                    </div>
+                    
+                    <button type="submit" id="submit-btn" class="submit-btn">Login</button>
+                </form>
+                
+                <div class="signup-link">
+                    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="practice-tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 788 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@icyemezodrive.rw</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
         // Firebase configuration
@@ -206,96 +458,112 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
-        // Get DOM elements
-        const loginForm = document.getElementById('loginForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const loader = document.getElementById('loader');
-        const notification = document.getElementById('notification');
-        
-        // Show notification function
-        function showNotification(message, isSuccess) {
-            notification.textContent = message;
-            notification.className = isSuccess ? 'notification success' : 'notification error';
+
+        // Show notification message
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
             
+            messageEl.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            
+            // Hide notification after 5 seconds
             setTimeout(() => {
-                notification.className = 'notification';
-            }, 3000);
+                notification.style.display = 'none';
+            }, 5000);
         }
-        
-        // Form submission handler
-        loginForm.addEventListener('submit', async function(e) {
+
+        // Handle form submission
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Get form values
-            const phone = document.getElementById('phone').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
             const password = document.getElementById('password').value;
             
-            // Basic validation
-            if (!/^\d{10,}$/.test(phone.replace(/\D/g, ''))) {
-                showNotification('Please enter a valid phone number', false);
-                return;
-            }
-            
-            if (password.length < 8) {
-                showNotification('Password must be at least 8 characters long', false);
-                return;
-            }
-            
-            // Show loader and disable button
-            loader.style.display = 'block';
+            // Disable submit button to prevent multiple submissions
+            const submitBtn = document.getElementById('submit-btn');
             submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            
+            // Show support info
+            document.getElementById('support-info').style.display = 'block';
             
             try {
-                // Query Firestore for user with matching phone number
-                const usersRef = db.collection('users');
-                const querySnapshot = await usersRef
-                    .where('phone', '==', phone)
-                    .get();
+                // Generate user ID from phone number
+                const userId = phoneNumber.replace(/\D/g, '');
                 
-                if (querySnapshot.empty) {
-                    showNotification('No account found with this phone number', false);
+                // Get user data from Firestore
+                const userDoc = await db.collection('users').doc(userId).get();
+                
+                if (!userDoc.exists) {
+                    showNotification('Account not found. Please check your phone number or sign up for an account.', 'error');
                     return;
                 }
                 
-                let userFound = false;
-                let userData = null;
+                const userData = userDoc.data();
                 
-                querySnapshot.forEach((doc) => {
-                    userData = doc.data();
-                    // Check if password matches (in a real app, use proper password hashing)
-                    if (userData.password === password) {
-                        userFound = true;
-                        // Store user data in localStorage
-                        localStorage.setItem('user', JSON.stringify({
-                            id: doc.id,
-                            ...userData
-                        }));
-                        localStorage.setItem('isLoggedIn', 'true');
-                        return;
-                    }
-                });
-                
-                if (userFound) {
-                    showNotification('Login successful! Redirecting...', true);
-                    // Redirect to dashboard after a short delay
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1500);
-                } else {
-                    showNotification('Incorrect password', false);
+                // Check if password matches
+                if (userData.password !== password) {
+                    showNotification('Incorrect password. Please try again or contact us for assistance.', 'error');
+                    return;
                 }
+                
+                // Check if subscription is active
+                if (!userData.subscriptionActive) {
+                    showNotification('Your subscription is not active. Please make payment to access content.', 'error');
+                    return;
+                }
+                
+                // Check if subscription has expired (more than 30 days)
+                const creationDate = new Date(userData.creationDate);
+                const currentDate = new Date();
+                const daysSinceCreation = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
+                
+                if (daysSinceCreation > 30) {
+                    showNotification('Your subscription has expired. Please renew to access content.', 'error');
+                    
+                    // Update subscription status in database
+                    await db.collection('users').doc(userId).update({
+                        subscriptionActive: false
+                    });
+                    
+                    return;
+                }
+                
+                // Login successful
+                showNotification('Login successful! Redirecting to dashboard...', 'success');
+                
+                // Store user data in localStorage for dashboard access
+                localStorage.setItem('user', JSON.stringify({
+                    id: userId,
+                    fullName: userData.fullName,
+                    phoneNumber: userData.phoneNumber,
+                    creationDate: userData.creationDate,
+                    subscriptionActive: userData.subscriptionActive
+                }));
+                
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
             } catch (error) {
-                console.error("Login error: ", error);
-                showNotification('Error during login. Please try again.', false);
+                console.error('Error logging in:', error);
+                showNotification('Error logging in: ' + error.message, 'error');
             } finally {
-                // Hide loader and enable button
-                loader.style.display = 'none';
+                // Re-enable submit button
                 submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
             }
+        });
+
+        // Show support info when password field is focused
+        document.getElementById('password').addEventListener('focus', function() {
+            document.getElementById('support-info').style.display = 'block';
         });
     </script>
 </body>
-</html>
+    </html>
