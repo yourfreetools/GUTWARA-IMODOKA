@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        /* Main Content */
+        .create-post {
+            padding: 30px;
+        }
+        
+        .create-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .create-header h2 {
+            color: #1a237e;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .create-header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .submit-btn {
+            padding: 14px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: #3949ab;
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .notification {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .notification.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .notification.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .preview-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .preview-section h3 {
+            color: #1a237e;
+            margin-bottom: 20px;
+        }
+        
+        .course-preview {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+        
+        .course-link {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e8f4fd;
+            border-radius: 5px;
+            border-left: 4px solid #1a237e;
+        }
+        
+        .course-link a {
+            color: #1a237e;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            padding: 12px 20px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex: 1;
+        }
+        
+        .action-btn:hover {
+            background: #3949ab;
+        }
+        
+        .action-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .action-btn.secondary {
+            background: #666;
+        }
+        
+        .action-btn.secondary:hover {
+            background: #555;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .preview-actions {
+                flex-direction: column;
+            }
+            
+            .create-post {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive - Admin</h1>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">View Courses</a></li>
+                        <li><a href="create-post.html" class="active">Create Course</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Create Post Content -->
+        <section class="create-post">
+            <div class="create-header">
+                <h2>Create New Course</h2>
+                <p>Add a new driving course to the platform</p>
+            </div>
+            
+            <div id="notification" class="notification">
+                <span id="notification-message"></span>
+            </div>
+            
+            <form id="course-form">
+                <div class="form-group">
+                    <label for="courseNumber">Course Number *</label>
+                    <input type="number" id="courseNumber" class="form-control" placeholder="Enter course number (e.g., 1, 2, 3)" min="1" required>
+                    <p class="form-hint">This determines the order of courses. The next available number is: <span id="next-course-number">1</span></p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseTitle">Course Title *</label>
+                    <input type="text" id="courseTitle" class="form-control" placeholder="Enter course title" required>
+                    <p class="form-hint">This will be displayed as the course name</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseCategory">Course Category *</label>
+                    <select id="courseCategory" class="form-control" required>
+                        <option value="">Select a category</option>
+                        <option value="traffic-laws">Traffic Laws</option>
+                        <option value="road-signs">Road Signs</option>
+                        <option value="safe-driving">Safe Driving</option>
+                        <option value="vehicle-operation">Vehicle Operation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseContent">Course Content *</label>
+                    <textarea id="courseContent" class="form-control" placeholder="Enter course content. Each new line will become a paragraph." required></textarea>
+                    <p class="form-hint">Each new line will automatically be converted to a paragraph tag</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lessonCount">Number of Lessons</label>
+                    <input type="number" id="lessonCount" class="form-control" placeholder="Enter number of lessons" min="1" value="5">
+                </div>
+                
+                <button type="submit" id="submit-btn" class="submit-btn">Create Course</button>
+            </form>
+            
+            <div class="preview-section">
+                <h3>Course Preview</h3>
+                <div class="course-preview" id="course-preview">
+                    <p>Course preview will appear here...</p>
+                </div>
+                
+                <div id="course-link-container" class="course-link" style="display: none;">
+                    <strong>Course Link: </strong>
+                    <a id="course-link" href="#" target="_blank">View Course</a>
+                </div>
+                
+                <div class="preview-actions">
+                    <button class="action-btn secondary" onclick="viewAllCourses()">View All Courses</button>
+                    <button class="action-btn secondary" onclick="clearForm()">Create Another Course</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        let nextCourseNumber = 1;
+
+        // Show notification message
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
+            
+            messageEl.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Format content with paragraph tags
+        function formatContent(content) {
+            // Split by new lines and wrap each line in <p> tags
+            const paragraphs = content.split('\n').filter(line => line.trim() !== '');
+            if (paragraphs.length === 0) return '<p>No content available</p>';
+            return paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+        }
+
+        // Update course preview
+        function updatePreview() {
+            const title = document.getElementById('courseTitle').value || 'Course Title';
+            const content = document.getElementById('courseContent').value || 'Course content will appear here...';
+            const number = document.getElementById('courseNumber').value || '1';
+            
+            document.getElementById('course-preview').innerHTML = `
+                <h3>Isomo rya ${number}: ${title}</h3>
+                <div>${formatContent(content)}</div>
+            `;
+        }
+
+        // Find the next available course number
+        function findNextCourseNumber() {
+            db.collection('courses').orderBy('order', 'desc').limit(1).get()
+                .then((querySnapshot) => {
+                    if (!querySnapshot.empty) {
+                        const lastCourse = querySnapshot.docs[0].data();
+                        nextCourseNumber = lastCourse.order + 1;
+                    } else {
+                        nextCourseNumber = 1;
+                    }
+                    document.getElementById('next-course-number').textContent = nextCourseNumber;
+                    document.getElementById('courseNumber').value = nextCourseNumber;
+                })
+                .catch((error) => {
+                    console.error("Error finding next course number: ", error);
+                    document.getElementById('next-course-number').textContent = '1';
+                });
+        }
+
+        // Generate a URL-friendly slug from text
+        function generateSlug(text) {
+            return text
+                .toString()
+                .toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+        }
+
+        // Handle form submission
+        document.getElementById('course-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const courseNumber = parseInt(document.getElementById('courseNumber').value);
+            const courseTitle = document.getElementById('courseTitle').value;
+            const courseCategory = document.getElementById('courseCategory').value;
+            const courseContent = document.getElementById('courseContent').value;
+            const lessonCount = parseInt(document.getElementById('lessonCount').value) || 5;
+            
+            // Basic validation
+            if (!courseTitle || !courseCategory || !courseContent) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Disable submit button to prevent multiple submissions
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Course...';
+            
+            try {
+                // Check if course number already exists
+                const existingCourse = await db.collection('courses').where('order', '==', courseNumber).get();
+                if (!existingCourse.empty) {
+                    showNotification('A course with this number already exists. Please use a different number.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Course';
+                    return;
+                }
+                
+                // Create a unique ID for the course
+                const courseId = `course-${Date.now()}`;
+                
+                // Generate a URL-friendly slug for the course
+                const courseSlug = generateSlug(courseTitle);
+                
+                // Store course data in Firestore
+                await db.collection('courses').doc(courseId).set({
+                    id: courseId,
+                    title: courseTitle,
+                    order: courseNumber,
+                    category: courseCategory,
+                    content: formatContent(courseContent),
+                    rawContent: courseContent, // Store original content for editing
+                    lessonCount: lessonCount,
+                    createdAt: new Date().toISOString(),
+                    slug: courseSlug,
+                    url: `course.html?id=${courseId}`
+                });
+                
+                // Show success message with link
+                showNotification('Course created successfully and saved to Firebase!', 'success');
+                
+                // Show the course link
+                document.getElementById('course-link').href = `course.html?id=${courseId}`;
+                document.getElementById('course-link').textContent = `course.html?id=${courseId}`;
+                document.getElementById('course-link-container').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error creating course:', error);
+                showNotification('Error creating course: ' + error.message, 'error');
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Course';
+            }
+        });
+
+        // View all courses
+        function viewAllCourses() {
+            window.location.href = 'courses.html';
+        }
+
+        // Clear form
+        function clearForm() {
+            document.getElementById('course-form').reset();
+            document.getElementById('course-link-container').style.display = 'none';
+            updatePreview();
+            findNextCourseNumber();
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up preview updating
+            document.getElementById('courseTitle').addEventListener('input', updatePreview);
+            document.getElementById('courseContent').addEventListener('input', updatePreview);
+            document.getElementById('courseNumber').addEventListener('input', updatePreview);
+            
+            // Find the next available course number
+            findNextCourseNumber();
+            
+            // Initial preview update
+            updatePreview();
+        });
+    </script>
+</body>
+</html>
