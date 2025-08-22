@@ -1,0 +1,947 @@
+practice-tests.html<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Test - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 50px;
+        }
+        
+        .timer {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        /* Test Content */
+        .test-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .test-header h2 {
+            color: #1a237e;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .test-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .meta-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a237e;
+        }
+        
+        .meta-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Questions */
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #1a237e;
+            font-size: 18px;
+        }
+        
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option-item:hover {
+            border-color: #1a237e;
+            background: #f0f4ff;
+        }
+        
+        .option-item.selected {
+            border-color: #1a237e;
+            background: #e8edff;
+        }
+        
+        .option-letter {
+            font-weight: bold;
+            color: #1a237e;
+            min-width: 25px;
+        }
+        
+        .option-text {
+            flex: 1;
+        }
+        
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            background: #3949ab;
+        }
+        
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .question-indicators {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .question-indicator {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f0f0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .question-indicator.current {
+            background: #1a237e;
+            color: white;
+        }
+        
+        .question-indicator.answered {
+            background: #4caf50;
+            color: white;
+        }
+        
+        /* Submit Section */
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .submit-btn {
+            padding: 15px 30px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: #43a047;
+        }
+        
+        /* Results Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-title {
+            color: #1a237e;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .result-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+        
+        .result-details {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #1a237e;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #3949ab;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .loading i {
+            margin-right: 10px;
+            color: #1a237e;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #721c24;
+            background: #f8d7da;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .test-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .question-indicators {
+                order: -1;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <div class="timer-container">
+                    <i class="fas fa-clock"></i>
+                    <div class="timer" id="timer">00:00</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div id="test-loading" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Loading test...
+        </div>
+        
+        <div id="test-container" style="display: none;">
+            <div class="test-container">
+                <div class="test-header">
+                    <h2 id="test-title">Test Title</h2>
+                    <div class="test-meta">
+                        <div class="meta-item">
+                            <span class="meta-value" id="total-questions">0</span>
+                            <span class="meta-label">Questions</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-value" id="total-marks">0</span>
+                            <span class="meta-label">Total Marks</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-value" id="time-limit">0</span>
+                            <span class="meta-label">Minutes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="questions-container">
+                    <!-- Questions will be loaded here -->
+                </div>
+                
+                <div class="navigation">
+                    <button id="prev-btn" class="nav-btn" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    
+                    <div class="question-indicators" id="question-indicators">
+                        <!-- Question indicators will be loaded here -->
+                    </div>
+                    
+                    <button id="next-btn" class="nav-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="submit-section">
+                    <button id="submit-btn" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Submit Test
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="test-error" class="error" style="display: none;">
+            <h2>Test Not Found</h2>
+            <p>The requested test could not be found or you may not have access to view it.</p>
+            <p>Please check the URL or return to the <a href="tests.html">tests page</a> to browse available tests.</p>
+        </div>
+    </main>
+
+    <!-- Results Modal -->
+    <div class="modal" id="results-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Test Results</h2>
+            <div class="result-score" id="result-score">0/0</div>
+            
+            <div class="result-details">
+                <div class="result-item">
+                    <span>Total Questions:</span>
+                    <span id="result-total-questions">0</span>
+                </div>
+                <div class="result-item">
+                    <span>Correct Answers:</span>
+                    <span id="result-correct-answers">0</span>
+                </div>
+                <div class="result-item">
+                    <span>Score:</span>
+                    <span id="result-percentage">0%</span>
+                </div>
+                <div class="result-item">
+                    <span>Time Taken:</span>
+                    <span id="result-time-taken">00:00</span>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn btn-primary" onclick="location.href='tests.html'">
+                    <i class="fas fa-list"></i> Back to Tests
+                </button>
+                <button class="modal-btn btn-secondary" onclick="location.reload()">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 788 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@icyemezodrive.rw</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Global variables
+        let testData = null;
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let timerInterval = null;
+        let timeRemaining = 0;
+        let startTime = null;
+
+        // Get test ID from URL parameters
+        function getTestIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Start the timer
+        function startTimer(minutes) {
+            timeRemaining = minutes * 60;
+            startTime = new Date();
+            
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            document.getElementById('timer').textContent = formatTime(timeRemaining);
+        }
+
+        // Load and display test
+        async function loadTest() {
+            const testId = getTestIdFromUrl();
+            const loadingEl = document.getElementById('test-loading');
+            const testContainer = document.getElementById('test-container');
+            const errorEl = document.getElementById('test-error');
+            
+            if (!testId) {
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                return;
+            }
+            
+            try {
+                const doc = await db.collection('practiceTests').doc(testId).get();
+                
+                if (!doc.exists) {
+                    throw new Error('Test not found');
+                }
+                
+                testData = doc.data();
+                testData.id = doc.id;
+                
+                // Update page title
+                document.title = `${testData.title} - Icyemezo Drive`;
+                
+                // Update test header
+                document.getElementById('test-title').textContent = testData.title;
+                document.getElementById('total-questions').textContent = testData.questions.length;
+                document.getElementById('total-marks').textContent = testData.totalMarks;
+                document.getElementById('time-limit').textContent = testData.timeLimit;
+                
+                // Initialize user answers array
+                userAnswers = new Array(testData.questions.length).fill(null);
+                
+                // Start the timer
+                startTimer(testData.timeLimit);
+                
+                // Display first question
+                displayQuestion(0);
+                
+                // Create question indicators
+                createQuestionIndicators();
+                
+                // Show test content
+                loadingEl.style.display = 'none';
+                testContainer.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading test:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+            }
+        }
+
+        // Display a question
+        function displayQuestion(index) {
+            if (index < 0 || index >= testData.questions.length) return;
+            
+            currentQuestion = index;
+            const question = testData.questions[index];
+            
+            const questionsContainer = document.getElementById('questions-container');
+            
+            let optionsHTML = '';
+            question.options.forEach((option, i) => {
+                const letter = String.fromCharCode(65 + i); // A, B, C, etc.
+                const isSelected = userAnswers[index] === i;
+                
+                optionsHTML += `
+                    <div class="option-item ${isSelected ? 'selected' : ''}" onclick="selectOption(${i})">
+                        <span class="option-letter">${letter}</span>
+                        <span class="option-text">${option}</span>
+                    </div>
+                `;
+            });
+            
+            questionsContainer.innerHTML = `
+                <div class="question-container">
+                    <div class="question-card">
+                        <div class="question-header">
+                            <span class="question-number">Question ${index + 1} of ${testData.questions.length}</span>
+                        </div>
+                        <div class="question-text">${question.text}</div>
+                        <div class="options-container">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === testData.questions.length - 1;
+            
+            // Update question indicators
+            updateQuestionIndicators();
+        }
+
+        // Create question indicators
+        function createQuestionIndicators() {
+            const indicatorsContainer = document.getElementById('question-indicators');
+            indicatorsContainer.innerHTML = '';
+            
+            testData.questions.forEach((_, i) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'question-indicator';
+                indicator.textContent = i + 1;
+                indicator.addEventListener('click', () => displayQuestion(i));
+                indicatorsContainer.appendChild(indicator);
+            });
+            
+            updateQuestionIndicators();
+        }
+
+        // Update question indicators
+        function updateQuestionIndicators() {
+            const indicators = document.querySelectorAll('.question-indicator');
+            indicators.forEach((indicator, i) => {
+                indicator.classList.remove('current', 'answered');
+                if (i === currentQuestion) {
+                    indicator.classList.add('current');
+                }
+                if (userAnswers[i] !== null) {
+                    indicator.classList.add('answered');
+                }
+            });
+        }
+
+        // Select an option
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Update UI
+            const options = document.querySelectorAll('.option-item');
+            options.forEach((option, i) => {
+                if (i === optionIndex) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+            
+            // Update question indicator
+            updateQuestionIndicators();
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < testData.questions.length - 1) {
+                displayQuestion(currentQuestion + 1);
+            }
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                displayQuestion(currentQuestion - 1);
+            }
+        }
+
+        // Calculate test results
+        function calculateResults() {
+            let correctCount = 0;
+            
+            testData.questions.forEach((question, i) => {
+                if (userAnswers[i] === question.correctOption) {
+                    correctCount++;
+                }
+            });
+            
+            const score = correctCount;
+            const total = testData.questions.length;
+            const percentage = Math.round((correctCount / total) * 100);
+            
+            // Calculate time taken
+            const endTime = new Date();
+            const timeTaken = Math.round((endTime - startTime) / 1000);
+            
+            return {
+                score: score,
+                total: total,
+                percentage: percentage,
+                correctCount: correctCount,
+                timeTaken: timeTaken
+            };
+        }
+
+        // Show results modal
+        function showResults(results) {
+            document.getElementById('result-score').textContent = `${results.score}/${results.total}`;
+            document.getElementById('result-total-questions').textContent = results.total;
+            document.getElementById('result-correct-answers').textContent = results.correctCount;
+            document.getElementById('result-percentage').textContent = `${results.percentage}%`;
+            document.getElementById('result-time-taken').textContent = formatTime(results.timeTaken);
+            
+            document.getElementById('results-modal').style.display = 'flex';
+        }
+
+        // Submit the test
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            const results = calculateResults();
+            showResults(results);
+            
+            // Save results to Firestore (optional)
+            saveTestResults(results);
+        }
+
+        // Save test results to Firestore
+        async function saveTestResults(results) {
+            try {
+                const userData = JSON.parse(localStorage.getItem('user'));
+                
+                if (userData) {
+                    const resultData = {
+                        testId: testData.id,
+                        testTitle: testData.title,
+                        userId: userData.phoneNumber,
+                        userName: userData.fullName,
+                        score: results.score,
+                        total: results.total,
+                        percentage: results.percentage,
+                        timeTaken: results.timeTaken,
+                        completedAt: new Date().toISOString()
+                    };
+                    
+                    await db.collection('testResults').add(resultData);
+                }
+            } catch (error) {
+                console.error('Error saving test results:', error);
+            }
+        }
+
+        // Initialize event listeners
+        function initEventListeners() {
+            document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+            document.getElementById('submit-btn').addEventListener('click', () => {
+                if (confirm('Are you sure you want to submit your test?')) {
+                    submitTest();
+                }
+            });
+        }
+
+        // Initialize the page
+        function initPage() {
+            initEventListeners();
+            loadTest();
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+  </html>
