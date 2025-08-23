@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Documents - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: #1a237e;
+            margin-bottom: 30px;
+        }
+        
+        .page-description {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #555;
+            font-size: 18px;
+        }
+        
+        /* PDF Grid */
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .pdf-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pdf-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pdf-icon {
+            background: #1a237e;
+            color: white;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+        }
+        
+        .pdf-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pdf-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a237e;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .pdf-date {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .view-btn {
+            margin-top: auto;
+            padding: 12px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .view-btn:hover {
+            background: #3949ab;
+        }
+        
+        /* Search and Filter */
+        .search-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        .filter-select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            min-width: 180px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .empty-state i {
+            font-size: 70px;
+            color: #c3cfe2;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p {
+            color: #777;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .loading i {
+            font-size: 40px;
+            color: #1a237e;
+            margin-bottom: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .pdf-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-box, .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="main-content">
+            <h1 class="page-title">Learning Resources</h1>
+            <p class="page-description">
+                Browse our collection of driving manuals, study guides, and educational materials to help you prepare for your driving test.
+            </p>
+            
+            <div class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="search-input" class="search-input" placeholder="Search documents...">
+                    </div>
+                    <select class="filter-select" id="filter-select">
+                        <option value="all">All Documents</option>
+                        <option value="recent">Recently Added</option>
+                        <option value="manual">Driving Manuals</option>
+                        <option value="guide">Study Guides</option>
+                        <option value="law">Traffic Laws</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading documents...</p>
+            </div>
+            
+            <div id="pdf-grid" class="pdf-grid">
+                <!-- PDF cards will be loaded here -->
+            </div>
+            
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <i class="fas fa-file-pdf"></i>
+                <h3>No Documents Available</h3>
+                <p>There are currently no PDF documents available. Please check back later.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="practice-tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 788 123 456</li>
+                        <li><i class="fas fa-envelope"></i> info@icyemezodrive.rw</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Global variables
+        let allPdfDocuments = [];
+        
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Load PDF documents from Firestore
+        async function loadPdfDocuments() {
+            try {
+                const snapshot = await db.collection('pdfLinks')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                allPdfDocuments = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    allPdfDocuments.push({
+                        id: doc.id,
+                        name: data.name,
+                        link: data.link,
+                        createdAt: data.createdAt
+                    });
+                });
+                
+                displayPdfDocuments(allPdfDocuments);
+                
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                
+                if (allPdfDocuments.length === 0) {
+                    document.getElementById('empty-state').style.display = 'block';
+                } else {
+                    document.getElementById('pdf-grid').style.display = 'grid';
+                }
+            } catch (error) {
+                console.error('Error loading PDF documents:', error);
+                document.getElementById('loading').innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Error loading documents. Please try again later.</p>
+                `;
+            }
+        }
+        
+        // Display PDF documents in the grid
+        function displayPdfDocuments(documents) {
+            const pdfGrid = document.getElementById('pdf-grid');
+            pdfGrid.innerHTML = '';
+            
+            if (documents.length === 0) {
+                document.getElementById('empty-state').style.display = 'block';
+                return;
+            }
+            
+            documents.forEach(doc => {
+                const pdfCard = document.createElement('div');
+                pdfCard.className = 'pdf-card';
+                pdfCard.innerHTML = `
+                    <div class="pdf-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">${doc.name}</h3>
+                        <div class="pdf-date">Added: ${formatDate(doc.createdAt)}</div>
+                        <button class="view-btn" onclick="viewPdf('${doc.link}')">
+                            <i class="fas fa-eye"></i> View Document
+                        </button>
+                    </div>
+                `;
+                pdfGrid.appendChild(pdfCard);
+            });
+        }
+        
+        // View PDF in new tab
+        function viewPdf(link) {
+            window.open(`pdfview.html?url=${encodeURIComponent(link)}`, '_blank');
+        }
+        
+        // Filter documents based on search input
+        function filterDocuments() {
+            const searchText = document.getElementById('search-input').value.toLowerCase();
+            const filterValue = document.getElementById('filter-select').value;
+            
+            let filteredDocuments = allPdfDocuments;
+            
+            // Apply search filter
+            if (searchText) {
+                filteredDocuments = filteredDocuments.filter(doc => 
+                    doc.name.toLowerCase().includes(searchText)
+                );
+            }
+            
+            // Apply category filter (for demo purposes)
+            if (filterValue !== 'all') {
+                // This is a simple demo filter - you would need to add a category field to your documents
+                // for proper filtering in a real application
+                filteredDocuments = filteredDocuments.filter(doc => {
+                    const name = doc.name.toLowerCase();
+                    switch(filterValue) {
+                        case 'recent':
+                            // Show documents from the last 7 days
+                            const docDate = new Date(doc.createdAt);
+                            const weekAgo = new Date();
+                            weekAgo.setDate(weekAgo.getDate() - 7);
+                            return docDate >= weekAgo;
+                        case 'manual':
+                            return name.includes('manual') || name.includes('guide');
+                        case 'guide':
+                            return name.includes('study') || name.includes('guide');
+                        case 'law':
+                            return name.includes('law') || name.includes('rule') || name.includes('regulation');
+                        default:
+                            return true;
+                    }
+                });
+            }
+            
+            displayPdfDocuments(filteredDocuments);
+            
+            // Show empty state if no documents match the filter
+            if (filteredDocuments.length === 0) {
+                document.getElementById('empty-state').style.display = 'block';
+            } else {
+                document.getElementById('empty-state').style.display = 'none';
+            }
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            document.getElementById('search-input').addEventListener('input', filterDocuments);
+            document.getElementById('filter-select').addEventListener('change', filterDocuments);
+        }
+        
+        // Initialize the page
+        function initPage() {
+            setupEventListeners();
+            loadPdfDocuments();
+        }
+        
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
