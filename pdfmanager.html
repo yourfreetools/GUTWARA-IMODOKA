@@ -47,7 +47,7 @@
             font-weight: 500;
         }
         
-        .form-group input {
+        .form-group input, .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
@@ -56,9 +56,27 @@
             transition: border-color 0.3s;
         }
         
-        .form-group input:focus {
+        .form-group input:focus, .form-group textarea:focus {
             border-color: #1a237e;
             outline: none;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            margin-top: 10px;
         }
         
         .submit-btn {
@@ -154,23 +172,29 @@
     <div class="container">
         <h1><i class="fas fa-file-pdf"></i> PDF Link Manager</h1>
         
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Enter one PDF URL per line in the textarea below</li>
+                <li>URLs should be in the format: https://github.com/user/repo/path/file.pdf</li>
+                <li>Each URL will be converted to: https://docs.google.com/gview?url=RAW_URL&embedded=true</li>
+            </ul>
+        </div>
+        
         <div id="message" class="message"></div>
         <div id="loading" class="loading">
             <i class="fas fa-spinner fa-spin"></i> Processing...
         </div>
         
         <div class="form-group">
-            <label for="docName">Document Name</label>
-            <input type="text" id="docName" placeholder="Enter document name">
+            <label for="docLinks">PDF URLs (one per line)</label>
+            <textarea id="docLinks" placeholder="https://github.com/your-repo/file1.pdf
+https://github.com/your-repo/file2.pdf
+https://github.com/your-repo/file3.pdf"></textarea>
         </div>
         
-        <div class="form-group">
-            <label for="docLink">GitHub PDF Link</label>
-            <input type="url" id="docLink" placeholder="https://github.com/your-repo/file.pdf">
-        </div>
-        
-        <button class="submit-btn" onclick="addPdfLink()">
-            <i class="fas fa-plus"></i> Add PDF Link
+        <button class="submit-btn" onclick="processPdfLinks()">
+            <i class="fas fa-plus"></i> Process PDF Links
         </button>
         
         <div class="links-list">
@@ -220,53 +244,76 @@
             document.getElementById('loading').style.display = show ? 'block' : 'none';
         }
         
-        // Add PDF link to Firestore
-        async function addPdfLink() {
-            const name = document.getElementById('docName').value.trim();
-            const link = document.getElementById('docLink').value.trim();
+        // Convert GitHub URL to raw format and then to Google Docs Viewer format
+        function convertToViewerUrl(githubUrl) {
+            // Convert to raw GitHub URL
+            const rawUrl = githubUrl
+                .trim()
+                .replace('github.com', 'raw.githubusercontent.com')
+                .replace('/blob/', '/');
+                
+            // Convert to Google Docs Viewer URL
+            return `https://docs.google.com/gview?url=${encodeURIComponent(rawUrl)}&embedded=true`;
+        }
+        
+        // Extract filename from URL
+        function getFileName(url) {
+            const pathParts = url.split('/');
+            return pathParts[pathParts.length - 1].replace('.pdf', '') || 'PDF Document';
+        }
+        
+        // Process multiple PDF links
+        async function processPdfLinks() {
+            const linksText = document.getElementById('docLinks').value.trim();
             
-            if (!name) {
-                showMessage('Please enter a document name', 'error');
+            if (!linksText) {
+                showMessage('Please enter at least one PDF URL', 'error');
                 return;
             }
             
-            if (!link) {
-                showMessage('Please enter a PDF link', 'error');
-                return;
-            }
+            const urls = linksText.split('\n').filter(url => url.trim() !== '');
             
-            // Validate GitHub URL format
-            if (!link.startsWith('https://github.com/') || !link.toLowerCase().endsWith('.pdf')) {
-                showMessage('Please enter a valid GitHub PDF link', 'error');
+            if (urls.length === 0) {
+                showMessage('Please enter at least one valid PDF URL', 'error');
                 return;
             }
             
             toggleLoading(true);
             
             try {
-                // Convert GitHub URL to raw format
-                const rawLink = link
-                    .replace('github.com', 'raw.githubusercontent.com')
-                    .replace('/blob/', '/');
+                let processedCount = 0;
                 
-                // Add to Firestore
-                await db.collection('pdfLinks').add({
-                    name: name,
-                    link: rawLink,
-                    createdAt: new Date().toISOString()
-                });
+                for (const url of urls) {
+                    // Validate GitHub URL format
+                    if (!url.startsWith('https://github.com/') || !url.toLowerCase().includes('.pdf')) {
+                        showMessage(`Skipping invalid URL: ${url}`, 'error');
+                        continue;
+                    }
+                    
+                    const viewerUrl = convertToViewerUrl(url);
+                    const fileName = getFileName(url);
+                    
+                    // Add to Firestore
+                    await db.collection('pdfLinks').add({
+                        name: fileName,
+                        originalUrl: url,
+                        viewerUrl: viewerUrl,
+                        createdAt: new Date().toISOString()
+                    });
+                    
+                    processedCount++;
+                }
                 
-                showMessage('PDF link added successfully!', 'success');
+                showMessage(`Successfully processed ${processedCount} of ${urls.length} PDF links!`, 'success');
                 
                 // Clear form
-                document.getElementById('docName').value = '';
-                document.getElementById('docLink').value = '';
+                document.getElementById('docLinks').value = '';
                 
                 // Refresh links list
                 loadPdfLinks();
             } catch (error) {
-                console.error('Error adding PDF link:', error);
-                showMessage('Error adding PDF link. Please try again.', 'error');
+                console.error('Error processing PDF links:', error);
+                showMessage('Error processing PDF links. Please try again.', 'error');
             } finally {
                 toggleLoading(false);
             }
@@ -294,7 +341,7 @@
                     linkItem.innerHTML = `
                         <div class="link-name">${data.name}</div>
                         <div class="link-actions">
-                            <button class="action-btn view" onclick="viewPdf('${data.link}')">
+                            <button class="action-btn view" onclick="viewPdf('${data.viewerUrl}')">
                                 <i class="fas fa-eye"></i> View
                             </button>
                             <button class="action-btn delete" onclick="deletePdfLink('${doc.id}')">
@@ -312,8 +359,8 @@
         }
         
         // View PDF in new tab
-        function viewPdf(link) {
-            window.open(`pdfview.html?url=${encodeURIComponent(link)}`, '_blank');
+        function viewPdf(viewerUrl) {
+            window.open(viewerUrl, '_blank');
         }
         
         // Delete PDF link
@@ -336,4 +383,4 @@
         document.addEventListener('DOMContentLoaded', loadPdfLinks);
     </script>
 </body>
-</html>
+    </html>
