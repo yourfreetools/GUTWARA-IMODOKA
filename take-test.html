@@ -288,6 +288,8 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            overflow-y: auto;
+            padding: 20px 0;
         }
         
         .modal-content {
@@ -295,9 +297,10 @@
             border-radius: 10px;
             padding: 30px;
             width: 90%;
-            max-width: 500px;
+            max-width: 800px;
             text-align: center;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
         }
         
         .modal-title {
@@ -357,6 +360,111 @@
         
         .btn-secondary:hover {
             background: #e0e0e0;
+        }
+        
+        /* Review Section */
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .review-title {
+            color: #1a237e;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .review-question {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .review-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .review-question-number {
+            font-weight: bold;
+            color: #1a237e;
+            font-size: 18px;
+        }
+        
+        .review-status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .incorrect {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .review-question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .review-options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .review-option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .review-option-item.correct-answer {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+        
+        .review-option-item.user-answer {
+            border-color: #2196f3;
+            background: #e3f2fd;
+        }
+        
+        .review-option-item.incorrect-answer {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .review-option-letter {
+            font-weight: bold;
+            min-width: 25px;
+        }
+        
+        .review-option-text {
+            flex: 1;
+        }
+        
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            font-size: 16px;
         }
         
         /* Loading */
@@ -568,6 +676,14 @@
                 <div class="result-item">
                     <span>Time Taken:</span>
                     <span id="result-time-taken">00:00</span>
+                </div>
+            </div>
+            
+            <!-- Review Section -->
+            <div class="review-section" id="review-section">
+                <h3 class="review-title">Review Your Answers</h3>
+                <div id="review-questions-container">
+                    <!-- Review questions will be loaded here -->
                 </div>
             </div>
             
@@ -884,7 +1000,64 @@
             document.getElementById('result-percentage').textContent = `${results.percentage}%`;
             document.getElementById('result-time-taken').textContent = formatTime(results.timeTaken);
             
+            // Display review of answers
+            displayReviewSection();
+            
             document.getElementById('results-modal').style.display = 'flex';
+        }
+
+        // Display review section with answers
+        function displayReviewSection() {
+            const reviewContainer = document.getElementById('review-questions-container');
+            reviewContainer.innerHTML = '';
+            
+            testData.questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correctOption;
+                
+                let optionsHTML = '';
+                question.options.forEach((option, i) => {
+                    const letter = String.fromCharCode(65 + i);
+                    let optionClass = '';
+                    
+                    if (i === question.correctOption) {
+                        optionClass = 'correct-answer';
+                    } else if (i === userAnswer && !isCorrect) {
+                        optionClass = 'incorrect-answer';
+                    } else if (i === userAnswer) {
+                        optionClass = 'user-answer';
+                    }
+                    
+                    optionsHTML += `
+                        <div class="review-option-item ${optionClass}">
+                            <span class="review-option-letter">${letter}</span>
+                            <span class="review-option-text">${option}</span>
+                        </div>
+                    `;
+                });
+                
+                const explanationHTML = question.explanation ? `
+                    <div class="explanation">
+                        <strong>Explanation:</strong> ${question.explanation}
+                    </div>
+                ` : '';
+                
+                reviewContainer.innerHTML += `
+                    <div class="review-question">
+                        <div class="review-question-header">
+                            <span class="review-question-number">Question ${index + 1}</span>
+                            <span class="review-status ${isCorrect ? 'correct' : 'incorrect'}">
+                                ${isCorrect ? 'Correct' : 'Incorrect'}
+                            </span>
+                        </div>
+                        <div class="review-question-text">${question.text}</div>
+                        <div class="review-options-container">
+                            ${optionsHTML}
+                        </div>
+                        ${explanationHTML}
+                    </div>
+                `;
+            });
         }
 
         // Submit the test
@@ -944,4 +1117,4 @@
         document.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
-  </html>
+    </html>
