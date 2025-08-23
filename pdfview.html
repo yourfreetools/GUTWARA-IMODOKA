@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer - Icyemezo Drive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #1a237e;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+        }
+        
+        .back-btn {
+            padding: 8px 15px;
+            background: white;
+            color: #1a237e;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PDF Viewer</h1>
+            <a href="pdfmanager.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Manager
+            </a>
+        </div>
+        
+        <div class="pdf-viewer">
+            <iframe id="pdf-frame" class="pdf-frame" src="about:blank"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Get PDF URL from query parameters
+        function getPdfUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('url');
+        }
+        
+        // Load PDF into iframe
+        function loadPdf() {
+            const pdfUrl = getPdfUrl();
+            if (pdfUrl) {
+                document.getElementById('pdf-frame').src = pdfUrl;
+            } else {
+                document.body.innerHTML = `
+                    <div class="container">
+                        <div class="header">
+                            <h1>PDF Viewer</h1>
+                            <a href="pdfmanager.html" class="back-btn">
+                                <i class="fas fa-arrow-left"></i> Back to Manager
+                            </a>
+                        </div>
+                        <div style="text-align: center; padding: 40px; background: white; border-radius: 8px;">
+                            <h2>No PDF URL provided</h2>
+                            <p>Please go back to the PDF manager and select a PDF to view.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Load PDF when page loads
+        document.addEventListener('DOMContentLoaded', loadPdf);
+    </script>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>
