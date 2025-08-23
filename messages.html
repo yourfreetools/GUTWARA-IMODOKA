@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 极速加速器
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        /* Messages Content */
+        .messages {
+            padding: 40px 0;
+        }
+        
+        .messages-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .messages-header h2 {
+            color: #1a237e;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .messages-header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-button {
+            padding: 15px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-button:hover {
+            background: #3949ab;
+        }
+        
+        .messages-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .message-count {
+            color: #1a237e;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .message-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #1a237e;
+            transition: transform 0.3s;
+        }
+        
+        .message-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .message-sender {
+            flex: 1;
+        }
+        
+        .message-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+        
+        .message-email {
+            color: #666;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        
+        .message-meta {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        
+        .message-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .message-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-new {
+            background: #ffecb3;
+            color: #7d6608;
+        }
+        
+        .status-read {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+        
+        .message-content {
+            margin-top: 15px;
+        }
+        
+        .message-subject {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .message-text {
+            color: #555;
+            line-height: 1.6;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #e0e0e0;
+        }
+        
+        .no-messages {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .no-messages i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .loading i {
+            margin-right: 10px;
+            color: #1a237e;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .message-header {
+                flex-direction: column;
+            }
+            
+            .message-meta {
+                text-align: left;
+                width: 100%;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                border-radius: 10px;
+            }
+            
+            .search-input {
+                border-radius: 10px 10px 0 0;
+            }
+            
+            .search-button {
+                border-radius: 0 0 10px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class极速加速器 class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="messages.html" class="active">Messages</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Messages Content -->
+    <section class="messages">
+        <div class="container">
+            <div class="messages-header">
+                <h2>Customer Messages</h2>
+                <p>View and manage all messages received from customers</p>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search messages by name, email, or content...">
+                    <button class="search-button" id="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="messages-container">
+                <div class="message-count" id="message-count">Loading messages...</div>
+                
+                <div id="messages-loading" class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading messages...
+                </div>
+                
+                <div class="message-list" id="message-list" style="display: none;">
+                    <!-- Messages will be loaded here -->
+                </div>
+                
+                <div id="no-messages" class="no-messages" style="display: none;">
+                    <i class="fas fa-envelope-open"></i>
+                    <h3>No messages yet</h3>
+                    <p>Customer messages will appear here once they start contacting you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <极速加速器>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><极速加速器 href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 783 669 165</li>
+                        <li><i class="fas fa-envelope"></i> icyemezodrive@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Global variables
+        let allMessages = [];
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Display messages
+        function displayMessages(messages) {
+            const messageList = document.getElementById('message-list');
+            const noMessages = document.getElementById('no-messages');
+            const messageCount = document.getElementById('message-count');
+            const loadingElement = document.getElementById('messages-loading');
+            
+            // Update message count
+            messageCount.textContent = `${messages.length} message${messages.length !== 1 ? 's' : ''} found`;
+            
+            if (messages.length === 0) {
+                messageList.style.display = 'none';
+                noMessages.style.display = 'block';
+                loadingElement.style.display = 'none';
+                return;
+            }
+            
+            // Sort messages by date (newest first)
+            messages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            let messagesHTML = '';
+            
+            messages.forEach((message) => {
+                messagesHTML += `
+                    <div class="message-card">
+                        <div class="message-header">
+                            <div class="message-sender">
+                                <div class="message-name">${message.name}</div>
+                                <div class="message-email">${message.email}</div>
+                            </div>
+                            <div class="message-meta">
+                                <div class="message-date">${formatDate(message.timestamp)}</div>
+                                <span class="message-status ${message.status === 'new' ? 'status-new' : 'status-read'}">
+                                    ${message.status === 'new' ? 'NEW' : 'READ'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-subject">${message.subject || 'No subject'}</div>
+                            <div class="message-text">${message.message}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            messageList.innerHTML = messagesHTML;
+            messageList.style.display = 'flex';
+            noMessages.style.display = 'none';
+            loadingElement.style.display = 'none';
+        }
+
+        // Load messages from Firestore
+        function loadMessages() {
+            const loadingElement = document.getElementById('messages-loading');
+            const messageList = document.getElementById('message-list');
+            const noMessages = document.getElementById('no-messages');
+            
+            loadingElement.style.display = 'block';
+            messageList.style.display = 'none';
+            noMessages.style.display = 'none';
+            
+            db.collection('contactMessages').get().then((querySnapshot) => {
+                allMessages = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const messageData = doc.data();
+                    allMessages.push({
+                        id: doc.id,
+                        ...messageData
+                    });
+                });
+                
+                // Display all messages
+                displayMessages(allMessages);
+                
+            }).catch((error) => {
+                console.error("Error loading messages: ", error);
+                loadingElement.innerHTML = '<div class="error">Error loading messages. Please try again.</div>';
+            });
+        }
+
+        // Search messages
+        function searchMessages() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            if (!searchTerm) {
+                displayMessages(allMessages);
+                return;
+            }
+            
+            const filteredMessages = allMessages.filter(message => {
+                const nameMatch = message.name && message.name.toLowerCase().includes(searchTerm);
+                const emailMatch = message.email && message.email.toLowerCase().includes(searchTerm);
+                const subjectMatch = message.subject && message.subject.toLowerCase().includes(searchTerm);
+                const messageMatch = message.message && message.message.toLowerCase().includes(searchTerm);
+                
+                return nameMatch || emailMatch || subjectMatch || messageMatch;
+            });
+            
+            displayMessages(filteredMessages);
+        }
+
+        // Initialize the page
+        function initPage() {
+            // Load messages
+            loadMessages();
+            
+            // Add event listeners
+            document.getElementById('search-button').addEventListener('click', searchMessages);
+            
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchMessages();
+                }
+            });
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
