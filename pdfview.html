@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en-RW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Viewer - Icyemezo Drive</title>
+    <title>PDF Viewer - GUTWARA-IMODOKA</title>
     <style>
         * {
             margin: 0;
@@ -13,108 +13,381 @@
         }
         
         body {
-            background: #f0f0f0;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
             color: #333;
-            line-height: 1.6;
             min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .container {
             width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin: 20px 0;
         }
         
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        header {
             background: #1a237e;
             color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
         }
         
-        .back-btn {
-            padding: 8px 15px;
-            background: white;
-            color: #1a237e;
-            border: none;
-            border-radius: 5px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
+        .user-info {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .security-notice {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .pdf-container {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
         }
         
         .pdf-viewer {
             width: 100%;
-            height: 80vh;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: white;
-        }
-        
-        .pdf-frame {
-            width: 100%;
             height: 100%;
             border: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            pointer-events: auto;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 10;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: #283593;
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: #9fa8da;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .info {
+            padding: 20px;
+            text-align: center;
+            background: #f1f3f5;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        footer {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .login-prompt {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .login-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #283593;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .user-info {
+                position: static;
+                justify-content: center;
+                margin-top: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>PDF Viewer</h1>
-            <a href="pdfmanager.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Back to Manager
-            </a>
+        <header>
+            <h1>Secure PDF Viewer</h1>
+            <p class="description">Protected content - Viewing only, no downloads allowed</p>
+            <div class="user-info" id="userInfo">
+                <span>Welcome, <span id="userName">User</span></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </header>
+        
+        <div class="security-notice">
+            <strong>Security Notice:</strong> This document is protected. Downloading, printing, or screenshotting is disabled.
         </div>
         
-        <div class="pdf-viewer">
-            <iframe id="pdf-frame" class="pdf-frame" src="about:blank"></iframe>
+        <div id="loginPrompt" class="login-prompt" style="display: none;">
+            <h2>Authentication Required</h2>
+            <p>You must be logged in to view this document</p>
+            <button class="login-btn" onclick="goToLogin()">Login Now</button>
+        </div>
+        
+        <div id="pdfSection">
+            <div class="pdf-container">
+                <div class="overlay" id="overlay"></div>
+                <iframe class="pdf-viewer" id="pdfViewer" style="display: none;"></iframe>
+            </div>
+            
+            <div class="controls">
+                <button class="btn" onclick="goBack()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Documents
+                </button>
+            </div>
+            
+            <div class="info">
+                <p>This document is protected by security measures. If you believe you should have access to download this content, please contact the administrator.</p>
+            </div>
         </div>
     </div>
+    
+    <footer>
+        <p>Secure PDF Viewer for GUTWARA-IMODOKA | &copy; 2023</p>
+    </footer>
 
     <script>
-        // Get PDF URL from query parameters
-        function getPdfUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('url');
+        // Simulated authentication check
+        // In a real application, this would verify with a server
+        function checkAuth() {
+            // Check if user is logged in (simulated with localStorage)
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const userName = localStorage.getItem('userName') || 'User';
+            
+            if (!isLoggedIn) {
+                // Show login prompt, hide PDF section
+                document.getElementById('loginPrompt').style.display = 'block';
+                document.getElementById('pdfSection').style.display = 'none';
+                document.getElementById('userInfo').style.display = 'none';
+                return false;
+            }
+            
+            // Show user info
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('loginPrompt').style.display = 'none';
+            document.getElementById('pdfSection').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'flex';
+            
+            return true;
         }
         
-        // Load PDF into iframe
-        function loadPdf() {
-            const pdfUrl = getPdfUrl();
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        
+        // Security measures
+        function enableSecurity() {
+            // Disable right-click
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable text selection
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable drag and drop
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable keyboard shortcuts for saving
+            document.addEventListener('keydown', function(e) {
+                // Disable Ctrl+S, Ctrl+P, etc.
+                if (e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'S' || e.key === 'P')) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Disable F12 (DevTools)
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+        
+        // Load the PDF if authenticated
+        function loadPDF() {
+            if (!checkAuth()) return;
+            
+            // Extract PDF URL from query parameters
+            const pdfUrl = getUrlParameter('url');
+            const docName = getUrlParameter('name') || 'Protected Document';
+            
             if (pdfUrl) {
-                document.getElementById('pdf-frame').src = pdfUrl;
+                // Display the PDF using Google Docs Viewer
+                const pdfViewer = document.getElementById('pdfViewer');
+                pdfViewer.src = 'https://docs.google.com/gview?url=' + encodeURIComponent(pdfUrl) + '&embedded=true';
+                pdfViewer.style.display = 'block';
+                
+                // Update header with document name
+                document.querySelector('h1').textContent = docName + ' (Protected View)';
+                
+                // Apply security measures
+                enableSecurity();
             } else {
-                document.body.innerHTML = `
-                    <div class="container">
-                        <div class="header">
-                            <h1>PDF Viewer</h1>
-                            <a href="pdfmanager.html" class="back-btn">
-                                <i class="fas fa-arrow-left"></i> Back to Manager
-                            </a>
-                        </div>
-                        <div style="text-align: center; padding: 40px; background: white; border-radius: 8px;">
-                            <h2>No PDF URL provided</h2>
-                            <p>Please go back to the PDF manager and select a PDF to view.</p>
-                        </div>
-                    </div>
-                `;
+                document.getElementById('overlay').style.display = 'none';
+                document.querySelector('.info').innerHTML = 
+                    '<p>No document specified. Please access documents from the main list.</p>';
             }
         }
         
-        // Load PDF when page loads
-        document.addEventListener('DOMContentLoaded', loadPdf);
+        function goToLogin() {
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+        
+        function logout() {
+            // Clear authentication data
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userName');
+            
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+        
+        function goBack() {
+            // Go back to documents list
+            window.location.href = 'pdfdisplay.html';
+        }
+        
+        // Initialize the viewer when page loads
+        window.onload = function() {
+            // For demo purposes - simulate a logged in user
+            // Remove this in production - authentication should come from your login system
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', 'Demo User');
+            
+            loadPDF();
+        };
     </script>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>
