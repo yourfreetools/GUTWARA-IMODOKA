@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        /* How It Works Content */
+        .how-it-works {
+            padding: 60px 0;
+        }
+        
+        .how-it-works-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .how-it-works-header h2 {
+            color: #1a237e;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .how-it-works-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #1a237e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h3 {
+            color: #1a237e;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .step-content p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .step-features {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .step-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .step-features i {
+            color: #4caf50;
+        }
+        
+        .step-image {
+            width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+        
+        .step-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .features-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .features-section h2 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: #e8eaf6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a237e;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-card h3 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .feature-card p {
+            color: #666;
+        }
+        
+        .cta-section {
+            text-align: center;
+            background: #1a237e;
+            color: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            padding: 15px 30px;
+            background: #ffc107;
+            color: #1a237e;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cta-button:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .cta-button.secondary:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .极速加速器-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .step-card {
+                flex-direction: column;
+            }
+            
+            .step-image {
+                width: 100%;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="how-it-works.html" class="active">How It Works</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- How It Works Content -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="how-it-works-header">
+                <h2>How Icyemezo Drive Works</h2>
+                <p>Learn how to get started with our platform and make the most of your driving education experience</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create Your Account</h3>
+                        <p>Start by creating your personal account on Icyemezo Drive. This will give you access to all our courses and practice tests.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Provide your full name and phone number</li>
+                            <li><i class="fas fa-check-circle"></i> No email required - we use your phone for authentication</li>
+                            <li><i class="fas fa-check-circle"></i> Quick and easy registration process</li>
+                        </ul>
+                    </div>
+                    <div class="step-image">
+                        <div class="step-image-placeholder">
+                            <i class="fas fa-user-plus"></i> Account Creation
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Make Payment</h3>
+                        <p>Activate your account by making a payment of 1,500 FRW via mobile money to our number.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Send payment to: <strong>+250 783 669 165</strong></li>
+                            <li><i class="fas fa-check-circle"></i> Use MTN Mobile Money or Airtel Money</li>
+                            <li><i class="fas fa-check-circle"></i> Affordable one-time payment for full access</li>
+                        </ul>
+                    </div>
+                    <div class="step-image">
+                        <div class="step-image-placeholder">
+                            <i class="fas fa-money-bill-wave"></i> Payment
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Receive Your Password</h3>
+                        <p>After payment, contact us on WhatsApp to receive your unique password for account access.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Message us on WhatsApp at <strong>+250 783 669 165</strong></li>
+                            <li><i class="fas fa-check-circle"></i> Provide your phone number used for registration</li>
+                            <li><i class="fas fa-check-circle"></i> Receive your password within 24 hours</li>
+                        </ul>
+                    </div>
+                    <div class="step-image">
+                        <div class="step-image-placeholder">
+                            <i class="fas fa-key"></i> Password
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Access Learning Materials</h3>
+                        <p>Login to your account and start exploring our comprehensive driving courses.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Study traffic laws and regulations</li>
+                            <li><i class="fas fa-check-circle"></i> Learn about road signs and their meanings</li>
+                            <li><i class="fas fa-check-circle"></i> Understand safe driving practices</li>
+                            <li><i class="fas fa-check-circle"></i> Study vehicle operation techniques</li>
+                        </ul>
+                    </div>
+                    <div class="step-image">
+                        <div class="step-image-placeholder">
+                            <i class="fas fa-book-open"></i> Courses
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Take Practice Tests</h3>
+                        <p>Test your knowledge with our practice exams designed to prepare you for the official driving test.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Multiple-choice questions similar to the real exam</li>
+                            <li><i class="fas fa-check-circle"></i> Timed tests to simulate exam conditions</li>
+                            <li><i class="fas fa-check-circle"></i> Instant results and feedback</li>
+                            <li><i class="fas fa-check-circle"></i> Track your progress over time</li>
+                        </ul>
+                    </div>
+                    <div class="step-image">
+                        <div class="step-image-placeholder">
+                            <i class="fas fa-clipboard-list"></i> Practice Tests
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Get Certified & Drive</h3>
+                        <p>After completing our courses and passing practice tests, you'll be ready to pass your official driving test.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check-circle"></i> Feel confident for your official exam</li>
+                            <li><i class="fas fa-check-circle"></i> Understand all Rwanda driving requirements</li>
+                            <li><i class="fas fa-check-circle"></i> Become a safe, licensed driver</li>
+                        </ul>
+                    </div>
+                    <div class="step-image">
+                        <div class="step-image-placeholder">
+                            <i class="fas fa-id-card"></i> Certification
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="features-section">
+                <h2>Why Choose Icyemezo Drive?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Expert Content</h3>
+                        <p>Our courses are developed by driving education experts specifically for Rwanda's road regulations.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Access all materials from your smartphone, tablet, or computer - learn anytime, anywhere.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Self-Paced Learning</h3>
+                        <p>Study at your own pace and take tests when you feel ready. No pressure, just progress.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Support Available</h3>
+                        <p>Have questions? Our team is available via WhatsApp to help you with any issues.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h2>Ready to Start Your Driving Journey?</h2>
+                <p>Join thousands of Rwandans who have successfully obtained their driving licenses with Icyemezo Drive</p>
+                <div class="cta-buttons">
+                    <a href="signup.html" class="cta-button">
+                        <i class="fas fa-user-plus"></i> Create Account Now
+                    </a>
+                    <a href="contact.html" class="cta-button secondary">
+                        <i class="fas fa-question-circle"></i> Contact Us for Help
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 783 669 165</li>
+                        <li><i class="fas fa-envelope"></i> icyemezodrive@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </极速加速器>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for any interactive elements
+        function initPage() {
+            // Any initialization code can go here
+            console.log("How It Works page loaded");
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+  </html>
