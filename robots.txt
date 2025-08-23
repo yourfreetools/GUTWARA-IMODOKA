@@ -1,0 +1,77 @@
+# robots.txt for Icyemezo Drive
+# https://icyemezodrive.pages.dev
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /messages.html
+Disallow: /create-course.html
+Disallow: /create-tests.html
+Disallow: /admin-dashboard.html
+
+# Sitemap location
+Sitemap: https://icyemezodrive.pages.dev/sitemap.xml
+
+# Crawl delay (1 request per second)
+Crawl-delay: 1
+
+# Allow search engines to index images, CSS, and JS
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+
+# Specific disallow rules for sensitive areas
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /search/
+Disallow: /*?*
+Disallow: /*.php$
+
+# Allow social media bots full access
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Pinterest
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+# Google specific directives
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+
+# Bing specific directives
+User-agent: bingbot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+# Yandex specific directives
+User-agent: Yandex
+Allow: /
+Disallow: /admin/
+Crawl-delay: 2
+
+# Baidu specific directives
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin/
+Crawl-delay: 3
