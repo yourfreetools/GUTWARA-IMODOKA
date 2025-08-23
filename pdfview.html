@@ -272,9 +272,6 @@
     </footer>
 
     <script>
-        // Enable debug mode by default if URL has issues
-        let debugMode = false;
-        
         // Function to get URL parameters
         function getUrlParameter(name) {
             name = name.replace(/[\[\]]/g, '\\$&');
@@ -305,9 +302,14 @@
         function getFinalPdfUrl() {
             if (!urlParam) return null;
             
-            // Check if the URL is already a Google Viewer URL
+            // Check if the URL is a Google Viewer URL with nested URL
             if (urlParam.includes('docs.google.com/viewer')) {
-                return urlParam;
+                // Extract the nested URL parameter from the Google Viewer URL
+                const nestedUrlMatch = urlParam.match(/[?&]url=([^&]+)/);
+                if (nestedUrlMatch && nestedUrlMatch[1]) {
+                    // We already have a complete Google Viewer URL, return as is
+                    return urlParam;
+                }
             }
             
             // If it's a direct PDF URL, use Google Viewer
@@ -452,4 +454,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
