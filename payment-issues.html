@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Issues - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        /* Payment Issues Content */
+        .payment-issues {
+            padding: 60px 0;
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .payment-header h2 {
+            color: #1a237e;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .issues-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .issue-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .issue-card h3 {
+            color: #1a237e;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .issue-content {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .issue-content p {
+            margin-bottom: 15px;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .contact-method {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: #1a237e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+        
+        .contact-method h3 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        .contact-info {
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #1a237e;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .contact-button:hover {
+            background: #3949ab;
+        }
+        
+        .whatsapp-button {
+            background: #25D366;
+        }
+        
+        .whatsapp-button:hover {
+            background: #128C7E;
+        }
+        
+        .email-button {
+            background: #d44638;
+        }
+        
+        .email-button:hover {
+            background: #b03c2f;
+        }
+        
+        .faq-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 50px;
+        }
+        
+        .faq-section h2 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            color: #1a237e;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .faq-answer {
+            color: #666;
+            line-height: 1.6;
+            padding-left: 30px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10极速加速器
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-question {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="payment-issues.html" class="active">Payment Help</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Payment Issues Content -->
+    <section class="payment-issues">
+        <div class="container">
+            <div class="payment-header">
+                <h2>Payment Assistance</h2>
+                <p>Having trouble with payment? We're here to help you resolve any issues quickly</p>
+            </div>
+            
+            <div class="issues-container">
+                <div class="issue-card">
+                    <h3><i class="fas fa-exclamation-circle"></i> Common Payment Issues</h3>
+                    <div class="issue-content">
+                        <p>If you're experiencing any of the following issues, please contact our admin team for assistance:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Payment not reflecting in your account</li>
+                            <li>Unable to complete mobile money transaction</li>
+                            <li>Wrong amount deducted</li>
+                            <li>Payment confirmation not received</li>
+                            <li>Account not activated after payment</li>
+                            <li>Any other payment-related problems</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <h3><i class="fas fa-clock"></i> What Information to Provide</h3>
+                    <div class="issue-content">
+                        <p>When contacting us about payment issues, please provide the following information to help us resolve your problem quickly:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Your full name</li>
+                            <li>Phone number used for registration</li>
+                            <li>Amount paid</li>
+                            <li>Date and time of payment</li>
+                            <li>Mobile money transaction ID (if available)</li>
+                            <li>Description of the issue you're experiencing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>Contact via WhatsApp</h3>
+                    <div class="contact-info">
+                        <p>Quick response guaranteed</p>
+                        <p><strong>+250 783 669 165</strong></p>
+                    </div>
+                    <a href="https://wa.me/250783669165" class="contact-button whatsapp-button">
+                        <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                    </a>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Contact via Email</h3>
+                    <div class="contact-info">
+                        <p>For detailed issues or documentation</p>
+                        <p><strong>icyemezodrive@gmail.com</strong></p>
+                    </div>
+                    <a href="mailto:icyemezodrive@gmail.com" class="contact-button email-button">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </a>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <span>How long does it take to activate my account after payment?</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Accounts are typically activated within 24 hours of payment confirmation. If it's been longer than this, please contact us with your payment details.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <span>What if I sent the wrong amount?</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Contact us immediately with details of the transaction. We'll help resolve the issue by either applying the correct amount or arranging a refund if necessary.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <span>I didn't receive a transaction confirmation. What should I do?</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>First, check with your mobile money provider to confirm the transaction went through. If it did but you still haven't received confirmation from us, contact us with your payment details.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Can I get a refund if I change my mind?</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refunds are considered on a case-by-case basis. Please contact us to discuss your situation, and we'll do our best to find a satisfactory solution.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 783 669 165</li>
+                        <li><i class="fas fa-envelope"></i> icyemezodrive@gmail.com</极速加速器>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for any interactive elements
+        function initPage() {
+            // Any initialization code can go here
+            console.log("Payment Issues page loaded");
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
