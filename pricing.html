@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        /* Pricing Content */
+        .pricing {
+            padding: 60px 0;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .pricing-header h2 {
+            color: #1a237e;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .pricing-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .pricing-card h3 {
+            color: #1a237e;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1a237e;
+            margin-bottom: 30px;
+        }
+        
+        .price span {
+            font-size: 20px;
+            color: #666;
+            font-weight: normal;
+        }
+        
+        .features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features i {
+            color: #4caf50;
+        }
+        
+        .payment-instructions {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .payment-instructions h4 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instruction-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #1a237e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .contact-info {
+            background: #e8f4fd;
+            border-left: 4px solid #1a237e;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 5px;
+        }
+        
+        .contact-info a {
+            color: #1a237e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .whatsapp-button:hover {
+            background: #128C7E;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .pricing-card {
+                padding: 30px 20px;
+            }
+            
+            .price {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html" class="active">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Pricing Content -->
+    <section class="pricing">
+        <div class="container">
+            <div class="pricing-header">
+                <h2>Simple & Affordable Pricing</h2>
+                <p>Get full access to all our driving courses and practice tests with one low monthly subscription</p>
+            </div>
+            
+            <div class="pricing-container">
+                <div class="pricing-card">
+                    <h3>Monthly Subscription</h3>
+                    <div class="price">1,500 Frw <span>/month</span></div>
+                    
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> Full access to all driving courses</li>
+                        <li><i class="fas fa-check-circle"></i> Unlimited practice tests</li>
+                        <li><i class="fas fa-check-circle"></i> Rwanda driving laws & regulations</li>
+                        <li><i class="fas fa-check-circle"></i> Road signs and safety guidelines</li>
+                        <li><i class="fas fa-check-circle"></i> Vehicle operation techniques</li>
+                        <li><i class="fas fa-check-circle"></i> Regular content updates</li>
+                    </ul>
+                    
+                    <div class="payment-instructions">
+                        <h4><i class="fas fa-money-bill-wave"></i> How to Subscribe</h4>
+                        
+                        <div class="instruction-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <p>Send payment of 1,500 Frw to our mobile number:</p>
+                                <div class="contact-info">
+                                    <p><strong>+250 783 669 165</strong></p>
+                                    <p>Via mobile money (MTN or Airtel)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="instruction-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <p>After payment, contact us on WhatsApp with your:</p>
+                                <ul>
+                                    <li>Full name</li>
+                                    <li>Phone number used for registration</li>
+                                    <li>Payment confirmation details</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="instruction-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <p>We will activate your subscription within 24 hours and send you confirmation</p>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/250783669165" class="whatsapp-button">
+                            <i class="fab fa-whatsapp"></i> Contact Us on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="tests.html">Practice Tests</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="payment-issues.html">Payment Issues</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 783 669 165</li>
+                        <li><i class="fas fa-envelope"></i> icyemezodrive@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for any interactive elements
+        function initPage() {
+            // Any initialization code can go here
+            console.log("Pricing page loaded");
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
