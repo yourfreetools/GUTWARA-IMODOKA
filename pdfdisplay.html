@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en-RW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Documents - Icyemezo Drive</title>
+    <title>Icyemezo Drive - PDF Viewer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,556 +14,622 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
             color: #333;
-            line-height: 1.6;
             min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            max-width: 1400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
         }
         
-        /* Header Styles */
         header {
-            background: #1a237e;
+            background: #1a2a6c;
             color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            position: relative;
         }
         
-        .header-content {
+        .user-controls {
+            position: absolute;
+            right: 20px;
+            top: 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
             gap: 10px;
         }
         
-        .logo i {
-            font-size: 28px;
-        }
-        
-        .logo h1 {
-            font-size: 22px;
-            font-weight: 700;
-        }
-        
-        /* Main Content */
-        .main-content {
-            padding: 40px 0;
-        }
-        
-        .page-title {
-            text-align: center;
-            color: #1a237e;
-            margin-bottom: 30px;
-        }
-        
-        .page-description {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: #555;
-            font-size: 18px;
-        }
-        
-        /* PDF Grid */
-        .pdf-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .pdf-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .pdf-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .pdf-icon {
-            background: #1a237e;
-            color: white;
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 70px;
-        }
-        
-        .pdf-content {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .pdf-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1a237e;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-        
-        .pdf-date {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        
-        .view-btn {
-            margin-top: auto;
-            padding: 12px;
-            background: #1a237e;
-            color: white;
+        .user-btn {
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            border-radius: 5px;
-            font-weight: 600;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: background 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            transition: all 0.3s ease;
         }
         
-        .view-btn:hover {
-            background: #3949ab;
+        .user-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
         
-        /* Search and Filter */
-        .search-section {
-            background: white;
-            border-radius: 10px;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .description {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #f8f9fa;
+        }
+        
+        .pdf-container {
+            width: 100%;
+            height: 75vh;
+            min-height: 600px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
         
-        .search-container {
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
             flex-wrap: wrap;
         }
         
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
         
-        .search-input {
-            width: 100%;
-            padding: 12px 15px 12px 45px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 16px;
+        .view-controls {
+            display: flex;
+            gap: 15px;
         }
         
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-        }
-        
-        .filter-select {
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 16px;
-            min-width: 180px;
-        }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .empty-state i {
-            font-size: 70px;
-            color: #c3cfe2;
-            margin-bottom: 20px;
-        }
-        
-        .empty-state h3 {
-            color: #555;
-            margin-bottom: 15px;
-        }
-        
-        .empty-state p {
-            color: #777;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .loading i {
-            font-size: 40px;
-            color: #1a237e;
-            margin-bottom: 20px;
-        }
-        
-        /* Footer */
-        footer {
-            background: #1a237e;
+        .btn {
+            padding: 12px 25px;
+            background: #1a2a6c;
             color: white;
-            padding: 30px 0 15px;
-            margin-top: 60px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 20px;
+        .btn:hover {
+            background: #253a87;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            position: relative;
-            padding-bottom: 10px;
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: #ffc107;
+        .page-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 15px;
+            font-weight: 600;
         }
         
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 8px;
-        }
-        
-        .footer-column a {
-            color: #e3e3e3;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column a:hover {
-            color: #ffc107;
-        }
-        
-        .copyright {
+        .page-input {
+            width: 70px;
+            padding: 10px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            color: #e3e3e3;
+            font-weight: 600;
         }
         
-        /* Responsive Design */
+        .info {
+            padding: 20px;
+            text-align: center;
+            background: #f1f3f5;
+            border-radius: 0 0 15px 15px;
+            font-size: 1rem;
+            color: #495057;
+        }
+        
+        footer {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #fdbb2d;
+            margin-bottom: 10px;
+        }
+        
+        .protection-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .protection-message {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+        }
+        
+        .protection-message i {
+            font-size: 2.5rem;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            border-radius: 8px;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 6px solid #1a2a6c;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Print prevention */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 95%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .pdf-container {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .controls {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .pdf-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            body {
+                padding: 15px;
             }
             
-            .search-container {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+            
+            .controls {
                 flex-direction: column;
+                align-items: center;
+                gap: 15px;
             }
             
-            .search-box, .filter-select {
+            .nav-controls, .view-controls {
                 width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .page-info {
+                margin: 10px 0;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .user-controls {
+                position: relative;
+                right: 0;
+                top: 0;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .pdf-container {
+                padding: 15px;
+                height: 65vh;
+                min-height: 450px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .pdf-container {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .page-input {
+                width: 60px;
+                padding: 8px;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .protection-message {
+                padding: 15px;
+                max-width: 90%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-car"></i>
-                    <h1>Icyemezo Drive</h1>
+    <div class="container">
+        <header>
+            <h1>Icyemezo Drive</h1>
+            <p class="description">Complete PDF Document Viewer - Pages 1 to 113</p>
+            <div class="user-controls">
+                <button class="user-btn" title="User profile">
+                    <i class="fas fa-user"></i>
+                </button>
+                <button class="user-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+        
+        <div class="pdf-container">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading document...</p>
+            </div>
+            <iframe class="pdf-viewer" style="display: none;"></iframe>
+            
+            <!-- Protection overlay to prevent downloading -->
+            <div class="protection-overlay">
+                <div class="protection-message">
+                    <i class="fas fa-lock"></i>
+                    <h3>Content Protected</h3>
+                    <p>Downloading and printing are disabled for security reasons</p>
                 </div>
             </div>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container">
-        <div class="main-content">
-            <h1 class="page-title">Learning Resources</h1>
-            <p class="page-description">
-                Browse our collection of driving manuals, study guides, and educational materials to help you prepare for your driving test.
-            </p>
-            
-            <div class="search-section">
-                <div class="search-container">
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="search-input" class="search-input" placeholder="Search documents...">
-                    </div>
-                    <select class="filter-select" id="filter-select">
-                        <option value="all">All Documents</option>
-                        <option value="recent">Recently Added</option>
-                        <option value="manual">Driving Manuals</option>
-                        <option value="guide">Study Guides</option>
-                        <option value="law">Traffic Laws</option>
-                    </select>
+        
+        <div class="controls">
+            <div class="nav-controls">
+                <button class="btn" id="prev-btn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <button class="btn" id="next-btn">
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="page-info">
+                    <span>Page:</span>
+                    <input type="number" class="page-input" id="page-input" value="1" min="1" max="113">
+                    <span>of 113</span>
                 </div>
             </div>
             
-            <div id="loading" class="loading">
-                <i class="fas fa-spinner fa-spin"></i>
-                <p>Loading documents...</p>
-            </div>
-            
-            <div id="pdf-grid" class="pdf-grid">
-                <!-- PDF cards will be loaded here -->
-            </div>
-            
-            <div id="empty-state" class="empty-state" style="display: none;">
-                <i class="fas fa-file-pdf"></i>
-                <h3>No Documents Available</h3>
-                <p>There are currently no PDF documents available. Please check back later.</p>
+            <div class="view-controls">
+                <button class="btn" id="zoom-in">
+                    <i class="fas fa-search-plus"></i>
+                    Zoom In
+                </button>
+                <button class="btn" id="zoom-out">
+                    <i class="fas fa-search-minus"></i>
+                    Zoom Out
+                </button>
+                <button class="btn" id="fit-width">
+                    <i class="fas fa-arrows-alt-h"></i>
+                    Fit Width
+                </button>
             </div>
         </div>
-    </main>
-
-    <!-- Footer -->
+        
+        <div class="info">
+            <p>This is a secure document viewer. You're viewing page <span id="current-page">1</span> of 113.</p>
+            <p>Use the navigation controls to move through the document.</p>
+        </div>
+    </div>
+    
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Icyemezo Drive</h3>
-                    <p>Helping Rwandans become safe, licensed drivers through affordable education.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="courses.html">Courses</a></li>
-                        <li><a href="practice-tests.html">Practice Tests</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="help-center.html">Help Center</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +250 788 123 456</li>
-                        <li><i class="fas fa-envelope"></i> info@icyemezodrive.rw</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 Icyemezo Drive. All rights reserved.</p>
-            </div>
-        </div>
+        <div class="logo">Icyemezo Drive</div>
+        <p>Secure Document Viewing System | &copy; 2023</p>
     </footer>
 
-    <!-- Firebase App (core) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <!-- Firebase Firestore -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
-            authDomain: "icyemezodrive.firebaseapp.com",
-            projectId: "icyemezodrive",
-            storageBucket: "icyemezodrive.firebasestorage.app",
-            messagingSenderId: "691489188647",
-            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
-            measurementId: "G-P4QX5DKD9Z"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        // PDF document configuration
+        const totalPages = 113;
+        const baseUrl = "https://github.com/yourfreetools/GUTWARA-IMODOKA/raw/3f25cdf47c7aa53a4fde9e7fb175116c965bc9c3/pdfnotes/questions_page_";
+        let currentPage = 1;
+        let zoomLevel = 1;
+        let fitToWidth = true;
         
-        // Global variables
-        let allPdfDocuments = [];
+        // DOM elements
+        const pdfViewer = document.querySelector('.pdf-viewer');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const pageInput = document.getElementById('page-input');
+        const currentPageSpan = document.getElementById('current-page');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const fitWidthBtn = document.getElementById('fit-width');
+        const loadingElement = document.querySelector('.loading');
+        const protectionOverlay = document.querySelector('.protection-overlay');
         
-        // Format date
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-        
-        // Load PDF documents from Firestore
-        async function loadPdfDocuments() {
-            try {
-                const snapshot = await db.collection('pdfLinks')
-                    .orderBy('createdAt', 'desc')
-                    .get();
-                
-                allPdfDocuments = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    allPdfDocuments.push({
-                        id: doc.id,
-                        name: data.name,
-                        link: data.link,
-                        createdAt: data.createdAt
-                    });
-                });
-                
-                displayPdfDocuments(allPdfDocuments);
-                
-                // Hide loading, show content
-                document.getElementById('loading').style.display = 'none';
-                
-                if (allPdfDocuments.length === 0) {
-                    document.getElementById('empty-state').style.display = 'block';
+        // Initialize the PDF viewer
+        function initPdfViewer() {
+            loadPage(currentPage);
+            
+            // Set up event listeners
+            prevBtn.addEventListener('click', goToPreviousPage);
+            nextBtn.addEventListener('click', goToNextPage);
+            
+            pageInput.addEventListener('change', () => {
+                const page = parseInt(pageInput.value);
+                if (page >= 1 && page <= totalPages) {
+                    goToPage(page);
                 } else {
-                    document.getElementById('pdf-grid').style.display = 'grid';
+                    pageInput.value = currentPage;
                 }
-            } catch (error) {
-                console.error('Error loading PDF documents:', error);
-                document.getElementById('loading').innerHTML = `
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Error loading documents. Please try again later.</p>
-                `;
-            }
-        }
-        
-        // Display PDF documents in the grid
-        function displayPdfDocuments(documents) {
-            const pdfGrid = document.getElementById('pdf-grid');
-            pdfGrid.innerHTML = '';
+            });
             
-            if (documents.length === 0) {
-                document.getElementById('empty-state').style.display = 'block';
-                return;
-            }
+            pageInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    const page = parseInt(pageInput.value);
+                    if (page >= 1 && page <= totalPages) {
+                        goToPage(page);
+                    } else {
+                        pageInput.value = currentPage;
+                    }
+                }
+            });
             
-            documents.forEach(doc => {
-                const pdfCard = document.createElement('div');
-                pdfCard.className = 'pdf-card';
-                pdfCard.innerHTML = `
-                    <div class="pdf-icon">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <div class="pdf-content">
-                        <h3 class="pdf-title">${doc.name}</h3>
-                        <div class="pdf-date">Added: ${formatDate(doc.createdAt)}</div>
-                        <button class="view-btn" onclick="viewPdf('${doc.link}')">
-                            <i class="fas fa-eye"></i> View Document
-                        </button>
-                    </div>
-                `;
-                pdfGrid.appendChild(pdfCard);
+            zoomInBtn.addEventListener('click', zoomIn);
+            zoomOutBtn.addEventListener('click', zoomOut);
+            fitWidthBtn.addEventListener('click', toggleFitWidth);
+            
+            // Show protection overlay on hover
+            pdfViewer.addEventListener('mouseover', () => {
+                protectionOverlay.style.opacity = '1';
+            });
+            
+            pdfViewer.addEventListener('mouseout', () => {
+                protectionOverlay.style.opacity = '0';
+            });
+            
+            // Prevent right-click context menu
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+            
+            // Prevent keyboard shortcuts (Ctrl+S, Ctrl+P, etc.)
+            document.addEventListener('keydown', function(e) {
+                // Disable Ctrl+S (Save)
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                }
+                
+                // Disable Ctrl+P (Print)
+                if (e.ctrlKey && e.key === 'p') {
+                    e.preventDefault();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    goToPreviousPage();
+                } else if (e.key === 'ArrowRight') {
+                    goToNextPage();
+                }
             });
         }
         
-        // View PDF in new tab
-        function viewPdf(link) {
-            window.open(`pdfview.html?url=${encodeURIComponent(link)}`, '_blank');
+        // Load a specific page
+        function loadPage(page) {
+            if (page < 1 || page > totalPages) return;
+            
+            loadingElement.style.display = 'flex';
+            pdfViewer.style.display = 'none';
+            
+            const pdfUrl = `${baseUrl}${page}.pdf`;
+            const viewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`;
+            
+            pdfViewer.src = viewerUrl;
+            
+            // Wait for the PDF to load
+            pdfViewer.onload = function() {
+                loadingElement.style.display = 'none';
+                pdfViewer.style.display = 'block';
+                currentPage = page;
+                pageInput.value = page;
+                currentPageSpan.textContent = page;
+                
+                // Update button states
+                prevBtn.disabled = (page === 1);
+                nextBtn.disabled = (page === totalPages);
+                
+                // Apply zoom
+                applyZoom();
+            };
         }
         
-        // Filter documents based on search input
-        function filterDocuments() {
-            const searchText = document.getElementById('search-input').value.toLowerCase();
-            const filterValue = document.getElementById('filter-select').value;
-            
-            let filteredDocuments = allPdfDocuments;
-            
-            // Apply search filter
-            if (searchText) {
-                filteredDocuments = filteredDocuments.filter(doc => 
-                    doc.name.toLowerCase().includes(searchText)
-                );
+        // Navigation functions
+        function goToPage(page) {
+            loadPage(page);
+        }
+        
+        function goToPreviousPage() {
+            if (currentPage > 1) {
+                loadPage(currentPage - 1);
             }
-            
-            // Apply category filter (for demo purposes)
-            if (filterValue !== 'all') {
-                // This is a simple demo filter - you would need to add a category field to your documents
-                // for proper filtering in a real application
-                filteredDocuments = filteredDocuments.filter(doc => {
-                    const name = doc.name.toLowerCase();
-                    switch(filterValue) {
-                        case 'recent':
-                            // Show documents from the last 7 days
-                            const docDate = new Date(doc.createdAt);
-                            const weekAgo = new Date();
-                            weekAgo.setDate(weekAgo.getDate() - 7);
-                            return docDate >= weekAgo;
-                        case 'manual':
-                            return name.includes('manual') || name.includes('guide');
-                        case 'guide':
-                            return name.includes('study') || name.includes('guide');
-                        case 'law':
-                            return name.includes('law') || name.includes('rule') || name.includes('regulation');
-                        default:
-                            return true;
-                    }
-                });
+        }
+        
+        function goToNextPage() {
+            if (currentPage < totalPages) {
+                loadPage(currentPage + 1);
             }
-            
-            displayPdfDocuments(filteredDocuments);
-            
-            // Show empty state if no documents match the filter
-            if (filteredDocuments.length === 0) {
-                document.getElementById('empty-state').style.display = 'block';
+        }
+        
+        // Zoom functions
+        function zoomIn() {
+            fitToWidth = false;
+            if (zoomLevel < 2.5) {
+                zoomLevel += 0.25;
+                applyZoom();
+            }
+        }
+        
+        function zoomOut() {
+            fitToWidth = false;
+            if (zoomLevel > 0.5) {
+                zoomLevel -= 0.25;
+                applyZoom();
+            }
+        }
+        
+        function toggleFitWidth() {
+            fitToWidth = !fitToWidth;
+            if (fitToWidth) {
+                zoomLevel = 1;
+                fitWidthBtn.style.background = '#00bfa5';
             } else {
-                document.getElementById('empty-state').style.display = 'none';
+                fitWidthBtn.style.background = '#1a2a6c';
+            }
+            applyZoom();
+        }
+        
+        function applyZoom() {
+            if (fitToWidth) {
+                pdfViewer.style.width = '100%';
+                pdfViewer.style.height = '100%';
+                pdfViewer.style.transform = 'none';
+            } else {
+                // Since we can't directly control the iframe content zoom,
+                // we adjust the iframe dimensions
+                const scale = zoomLevel;
+                pdfViewer.style.transform = `scale(${scale})`;
+                pdfViewer.style.transformOrigin = 'top left';
+                
+                // Adjust container to account for zoom
+                const container = pdfViewer.parentElement;
+                container.style.width = `${100 * scale}%`;
+                container.style.height = `${100 * scale}%`;
             }
         }
         
-        // Set up event listeners
-        function setupEventListeners() {
-            document.getElementById('search-input').addEventListener('input', filterDocuments);
-            document.getElementById('filter-select').addEventListener('change', filterDocuments);
-        }
-        
-        // Initialize the page
-        function initPage() {
-            setupEventListeners();
-            loadPdfDocuments();
-        }
-        
-        // Start everything when the page loads
-        document.addEventListener('DOMContentLoaded', initPage);
+        // Initialize the viewer when the page loads
+        window.onload = initPdfViewer;
     </script>
 </body>
-</html>
+    </html>
