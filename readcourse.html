@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Reader - Icyemezo Drive</title>
+    <title>Course - Icyemezo Drive</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="canonical" href="https://icyemezodrive.pages.dev/readcourse.html">
     <style>
@@ -119,21 +119,32 @@
         /* Main Content */
         main {
             flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             padding: 40px 0;
         }
         
-        .course-header {
+        .course-container {
             background: white;
             border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            margin-bottom: 40px;
         }
         
-        .course-header h1 {
+        .course-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .course-header h2 {
             color: #1a237e;
-            font-size: 32px;
+            font-size: 28px;
             margin-bottom: 10px;
         }
         
@@ -142,78 +153,26 @@
             justify-content: center;
             gap: 20px;
             margin-top: 15px;
-            color: #666;
             font-size: 14px;
+            color: #666;
         }
         
         .course-content {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin-bottom: 30px;
             line-height: 1.8;
-        }
-        
-        .course-content h2 {
-            color: #1a237e;
-            margin: 25px 0 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .course-content h3 {
-            color: #3949ab;
-            margin: 20px 0 10px;
-        }
-        
-        .course-content p {
-            margin-bottom: 15px;
             font-size: 17px;
         }
         
-        .course-content ul, .course-content ol {
-            margin: 15px 0;
-            padding-left: 30px;
+        .course-content p {
+            margin-bottom: 20px;
+            text-align: justify;
         }
         
-        .course-content li {
-            margin-bottom: 8px;
-        }
-        
-        .course-content blockquote {
-            border-left: 4px solid #1a237e;
-            padding-left: 20px;
-            margin: 20px 0;
-            font-style: italic;
-            color: #555;
-        }
-        
-        .course-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        .course-content th, .course-content td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        .course-content th {
-            background-color: #f5f7fa;
-            color: #1a237e;
-        }
-        
-        .course-content tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .navigation {
+        .navigation-buttons {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
         .nav-btn {
@@ -225,8 +184,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
-            text-decoration: none;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
         }
@@ -235,29 +193,14 @@
             background: #3949ab;
         }
         
-        .notification {
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .notification.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #666;
-        }
-        
-        .loading i {
-            margin-right: 10px;
+        .nav-btn.outline {
+            background: transparent;
             color: #1a237e;
+            border: 1px solid #1a237e;
+        }
+        
+        .nav-btn.outline:hover {
+            background: #f0f2ff;
         }
         
         /* Footer */
@@ -331,16 +274,20 @@
                 justify-content: center;
             }
             
-            .course-header, .course-content {
-                padding: 20px;
+            .course-container {
+                padding: 25px 20px;
+            }
+            
+            .course-header h2 {
+                font-size: 24px;
             }
             
             .course-meta {
                 flex-direction: column;
-                gap: 10px;
+                gap: 5px;
             }
             
-            .navigation {
+            .navigation-buttons {
                 flex-direction: column;
                 gap: 15px;
             }
@@ -348,6 +295,14 @@
             .nav-btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            .course-content {
+                font-size: 16px;
+            }
+            
+            .course-content p {
+                text-align: left;
             }
         }
     </style>
@@ -380,36 +335,32 @@
     <!-- Main Content -->
     <main>
         <div class="container">
-            <div id="course-loading" class="loading">
-                <i class="fas fa-spinner fa-spin"></i> Loading course content...
-            </div>
-            
-            <div id="course-container" style="display: none;">
+            <div class="course-container">
                 <div class="course-header">
-                    <h1 id="course-title">Course Title</h1>
-                    <p id="course-description">Driving education course</p>
+                    <h2 id="course-title">Loading Course...</h2>
                     <div class="course-meta">
-                        <span id="course-number">Course Number: DRV101</span>
-                        <span id="course-date">Created: January 1, 2023</span>
+                        <span id="course-number"></span>
+                        <span id="course-date"></span>
+                        <span id="course-access"></span>
                     </div>
                 </div>
                 
-                <div class="course-content">
-                    <div id="course-content-html">
-                        <!-- Course content will be inserted here -->
-                    </div>
+                <div id="notification" class="notification" style="display: none;">
+                    <span id="notification-message"></span>
                 </div>
                 
-                <div class="navigation">
-                    <a href="courses.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Courses</a>
-                    <a href="practice-tests.html" class="nav-btn">Take Practice Test <i class="fas fa-arrow-right"></i></a>
+                <div class="course-content" id="course-content">
+                    <p>Loading course content...</p>
                 </div>
-            </div>
-            
-            <div id="course-error" class="notification error" style="display: none;">
-                <h2>Course Not Found</h2>
-                <p>The requested course could not be found or you may not have access to view it.</p>
-                <p>Please check the URL or return to the <a href="courses.html">courses page</a> to browse available courses.</p>
+                
+                <div class="navigation-buttons">
+                    <button class="nav-btn outline" onclick="location.href='courses.html'">
+                        <i class="fas fa-arrow-left"></i> Back to Courses
+                    </button>
+                    <button class="nav-btn" onclick="location.href='practice-tests.html'">
+                        Take Practice Test <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </main>
@@ -476,64 +427,86 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Get course ID from URL parameters
+        // Show notification message
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
+            
+            messageEl.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Get course ID from URL
         function getCourseIdFromUrl() {
+            const path = window.location.pathname;
+            const page = path.split("/").pop();
+            
+            // Handle different URL formats
+            if (page.startsWith('course-') && page.endsWith('.html')) {
+                return page.replace('course-', '').replace('.html', '');
+            }
+            
+            // Try to get from query parameter as fallback
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('id');
         }
 
-        // Format date for display
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString(undefined, options);
-        }
-
         // Load and display course content
         async function loadCourse() {
-            const courseId = getCourseIdFromUrl();
-            const loadingEl = document.getElementById('course-loading');
-            const courseContainer = document.getElementById('course-container');
-            const errorEl = document.getElementById('course-error');
-            
-            if (!courseId) {
-                loadingEl.style.display = 'none';
-                errorEl.style.display = 'block';
-                return;
-            }
-            
             try {
+                const courseId = getCourseIdFromUrl();
+                
+                if (!courseId) {
+                    showNotification('Course not specified in URL', 'error');
+                    return;
+                }
+                
                 const doc = await db.collection('courses').doc(courseId).get();
                 
                 if (!doc.exists) {
-                    throw new Error('Course not found');
+                    showNotification('Course not found', 'error');
+                    return;
                 }
                 
                 const course = doc.data();
                 
-                // Update page title
-                document.title = `${course.title} - Icyemezo Drive`;
-                
-                // Update course header
+                // Update page content
                 document.getElementById('course-title').textContent = course.title;
-                document.getElementById('course-number').textContent = `Course Number: ${course.courseNumber}`;
-                document.getElementById('course-date').textContent = `Created: ${formatDate(course.creationDate)}`;
+                document.getElementById('course-number').textContent = course.courseNumber;
+                document.getElementById('course-date').textContent = 'Created: ' + new Date(course.creationDate).toLocaleDateString();
+                document.getElementById('course-access').textContent = course.public ? 'Public Course' : 'Subscribers Only';
                 
-                // Insert course content
-                document.getElementById('course-content-html').innerHTML = course.content;
+                // Display formatted content (each line as paragraph)
+                document.getElementById('course-content').innerHTML = course.formattedContent || formatContentWithParagraphs(course.content);
                 
-                // Show course content
-                loadingEl.style.display = 'none';
-                courseContainer.style.display = 'block';
+                // Update page title
+                document.title = `${course.courseNumber}: ${course.title} - Icyemezo Drive`;
                 
             } catch (error) {
                 console.error('Error loading course:', error);
-                loadingEl.style.display = 'none';
-                errorEl.style.display = 'block';
+                showNotification('Error loading course: ' + error.message, 'error');
             }
+        }
+
+        // Format content with paragraphs (fallback if formattedContent doesn't exist)
+        function formatContentWithParagraphs(text) {
+            if (!text) return '<p>No content available</p>';
+            
+            // Split by new lines and filter out empty lines
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            
+            // Wrap each line in a paragraph tag
+            return lines.map(line => `<p>${line.trim()}</p>`).join('');
         }
 
         // Load course when page loads
         document.addEventListener('DOMContentLoaded', loadCourse);
     </script>
 </body>
-</html>
+    </html>
