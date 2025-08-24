@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icyemezo Drive - Iga amategeko y'umuhanda & maze ubone ibyangombwa bikwemerera gutwara ibinyabiziga mu Rwanda</title>
+    <meta name="description" content="Imenyereze amategeko y'umuhanda ndetse nuko batwara imodoka mu Rwanda. Tugufitiye ibitabo byagifasha birimo i gazeti ya leta irimo amategeko y'umuhanda, ibyapa ndetse n'ubiusobanuro bwibigize imihanda hamwe n'ibizamini byakozwe kera nibisubizo byabyo">
+    <link rel="canonical" href="https://icyemezodrive.pages.dev/">
+    <!-- Essential Meta Tags for Facebook Open Graph -->
+<meta property="og:title" content="Icyemezo Drive - Iga amategeko y'umuhanda & maze ubone ibyangombwa bikwemerera gutwara ibinyabiziga mu Rwanda">
+<meta property="og:description" content="Imenyereze amategeko y'umuhanda ndetse nuko batwara imodoka mu Rwanda. Tugufitiye ibitabo byagifasha birimo i gazeti ya leta irimo amategeko y'umuhanda, ibyapa ndetse n'ubiusobanuro bwibigize imihanda hamwe n'ibizamini byakozwe kera nibisubizo byabyo">
+<meta property="og:image" content="https://icyemezodrive.pages.dev/images/card.jpg">
+<meta property="og:url" content="https://icyemezodrive.pages.dev/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Icyemezo Drive">
+
+<!-- Additional Facebook Open Graph Tags -->
+<meta property="og:locale" content="en_RW">
+<meta property="fb:app_id" content="your-facebook-app-id"> <!-- Optional: If you have a Facebook app ID -->
+
+<!-- Essential Meta Tags for Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@icyemezodrive"> <!-- Replace with your Twitter handle -->
+<meta name="twitter:creator" content="@icyemezodrive"> <!-- Replace with your Twitter handle -->
+<meta name="twitter:title" content="Icyemezo Drive - Iga amategeko y'umuhanda & maze ubone ibyangombwa bikwemerera gutwara ibinyabiziga mu Rwanda">
+<meta name="twitter:description" content="Imenyereze amategeko y'umuhanda ndetse nuko batwara imodoka mu Rwanda. Tugufitiye ibitabo byagifasha birimo i gazeti ya leta irimo amategeko y'umuhanda, ibyapa ndetse n'ubiusobanuro bwibigize imihanda hamwe n'ibizamini byakozwe kera nibisubizo byabyo">
+<meta name="twitter:image" content="https://icyemezodrive.pages.dev/images/card.jpg">
+<meta name="twitter:image:alt" content="Icyemezo Drive - Learn Rwanda Driving Laws">
+
+<!-- Additional Meta Tags -->
+<meta name="description" content="Imenyereze amategeko y'umuhanda ndetse nuko batwara imodoka mu Rwanda. Tugufitiye ibitabo byagifasha birimo i gazeti ya leta irimo amategeko y'umuhanda, ibyapa ndetse n'ubiusobanuro bwibigize imihanda hamwe n'ibizamini byakozwe kera nibisubizo byabyo">
+<meta name="keywords" content="Rwanda, uruhushya rwo gutwara ibinyabiziga, amategeko yo gutwara, iga gutwara ibinyabiziga, uruhushya rwo gutwara ibinyabiziga, uruhushya rwagateganyo rwo gutwara ibinyabiza, icyemezo">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="https://icyemezodrive.pages.dev/icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: #1a237e;
+        }
+        
+        .btn-primary:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(26, 35, 126, 0.8), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #1a237e;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #1a237e;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: #f5f7fa;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #1a237e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .step i {
+            font-size: 36px;
+            color: #1a237e;
+            margin: 20px 0;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 80px 0;
+            background: white;
+            text-align: center;
+        }
+        
+        .price-card {
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: #f5f7fa;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1a237e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Ahabanza</a></li>
+                        <li><a href="how-it-works.html">Uko Ikora</a></li>
+                        <li><a href="contact.html">Twandikire</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="location.href='login.html'">Injira muri Konti</button>
+                    <button class="btn btn-primary" onclick="location.href='signup.html'">Fungura Konti</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Iga amategeko y'umuhanda & maze ubone ibyangombwa bikwemerera gutwara ibinyabiziga mu Rwanda</h2>
+            <p>Uburyo bworoshye bwo kwiga amategeko y'umuhanda n'ibindio byose bikenewe ngo ustinde ikizami kikwemerera gutwara ibinyabiza mu Rwanda.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="location.href='signup.html'">Tangira Kwiga</button>
+                <button class="btn btn-outline" onclick="location.href='how-it-works.html'">Nigute Ikora</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Impamvu yo guhitamo Icyemezo Drive?</h2>
+                <p>Dutuma kwiga amategeko byoroha, bishoboka kandi neza</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Ibyo tugufitiye</h3>
+                    <p>Amategeko yose yo gutwara ibinyabiziga tugendeye kumashyasha yashizwe hanze na leta</p>
+                    <a href="courses.html" class="btn btn-outline" style="margin-top: 15px;">Reba amasomo</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Ibizamini</h3>
+                    <p>Suzuma aho ugeze wiga mbere yo kujya mu kizamini cy'ukuri </p>
+                    <a href="practice-tests.html" class="btn btn-outline" style="margin-top: 15px;">Kora ikizamini</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nigute ikora</h2>
+                <p>Gutangira biroroshye kandi uca mu nzira zoroshye</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <i class="fas fa-user-plus"></i>
+                    <h3>Fungura Konti</h3>
+                    <p>Fungura konti ukoresheje nimero ya Telefone n'indi myirondoro yibanze</p>
+                    <a href="signup.html" class="btn btn-outline" style="margin-top: 15px;">Fungura Konti</a>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Ishyura amafaranga y'ukwezi</h3>
+                    <p>Ishyura 1000 Frw wige ukwezi kose</p>
+                    <a href="pricing.html" class="btn btn-outline" style="margin-top: 15px;">Kwishyura</a>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <i class="fas fa-book-reader"></i>
+                    <h3>Tangira Kwiga</h3>
+                    <p>Tangira ukoreshe ibitabo, ukore nibizamini biri kuri uru rubuga</p>
+                    <a href="courses.html" class="btn btn-outline" style="margin-top: 15px;">Amasomo</a>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <i class="fas fa-id-card"></i>
+                    <h3>Bona uruhushya rwawe</h3>
+                    <p>Kora ikizamini maze ube umutwazi wemewe n'amategeko</p>
+                    <a href="success-stories.html" class="btn btn-outline" style="margin-top: 15px;">Ubuhamya</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ubushobozi mu kwiga</h2>
+                <p>Kwigishwa neza bidasaba kwishyura menshi</p>
+            </div>
+            <div class="price-card">
+                <h3>Amafaranga y'ukwezi</h3>
+                <div class="price">1000 <span>FRW ku kwezi</span></div>
+                <p>uburenganzira kubitabo nibizamini byahashize</p>
+                <p>Kora amasuzuma twateguye</p>
+                <p>Haba kuri Telefone cyangwa mudasobwa</p>
+                <p>Bihagarike igihe icyaricyo cyose</p>
+                <button class="btn btn-primary" style="margin-top: 20px;" onclick="location.href='signup.html'">Tangira uyu munsi</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ubuhamya</h2>
+                <p>Umwa ibyo bagiye bavuga kurubuga rwacu</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Nari nararakajwe n'ibizamini byo gutwara ibinyabiziga, gusa Icyemezo Drive banteguye neza maze nsinda kuncuro ya mbere!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JM</div>
+                        <div>
+                            <h4>Jean Marie</h4>
+                            <p>Kigali</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Uru nirwo rubuga rwambere. Nize inyo nkeneye byose mu byumweru bibiri."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AK</div>
+                        <div>
+                            <h4>Alice Keza</h4>
+                            <p>Musanze</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Ku mafaranfga 1000 Frw, Nicyo kintu cyiza nakoze bwambere."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EP</div>
+                        <div>
+                            <h4>Eric Parfait</h4>
+                            <p>Huye</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="testimonials.html" class="btn btn-primary">Komeza usome ubuhamya</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Gufasha abamnyarwanda gutwara neza, Abatwazi bafite ubumenyi buhagije.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Ibyihutirwa</h3>
+                    <ul>
+                        <li><a href="index.html">Ahabanza</a></li>
+                        <li><a href="courses.html"></a></li>
+                        <li><a href="practice-tests.html"></a></li>
+                        <li><a href="pricing.html">Ibiciro</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="help-center.html">Aho wafashirizwa</a></li>
+                        <li><a href="contact.html">Twandikire</a></li>
+                        <li><a href="payment-issues.html">Ibibazo mu kwishyura</a></li>
+                        <li><a href="faq.html">Ibibazo byabajijwe</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Twandikire</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 783 669 165</li>
+                        <li><i class="fas fa-envelope"></i> icyemezodrive@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="google_translate_element" style="display:none;"></div>
+<script src="translate.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+    <script>
+        // Simple JavaScript for button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const createAccountBtn = document.querySelectorAll('.btn-primary');
+            const loginBtn = document.querySelectorAll('.btn-outline');
+            
+            createAccountBtn.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // In a real implementation, this would redirect to signup
+                    console.log('Redirecting to signup page');
+                });
+            });
+            
+            loginBtn.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // In a real implementation, this would redirect to login
+                    console.log('Redirecting to login page');
+                });
+            });
+        });
+    </script>
+</body>
+    </html>
