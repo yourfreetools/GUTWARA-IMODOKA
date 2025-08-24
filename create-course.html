@@ -294,6 +294,36 @@
             text-decoration: underline;
         }
         
+        /* Category badges */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .category-traffic {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .category-signs {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .category-safe {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .category-operation {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
         /* Footer */
         footer {
             background: #1a237e;
@@ -437,9 +467,21 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="courseCategory">Course Category</label>
+                        <select id="courseCategory" class="form-control" required>
+                            <option value="">Select a category</option>
+                            <option value="Traffic Laws">Traffic Laws</option>
+                            <option value="Road Signs">Road Signs</option>
+                            <option value="Safe Driving">Safe Driving</option>
+                            <option value="Vehicle Operation">Vehicle Operation</option>
+                        </select>
+                        <p class="form-hint">Select the most relevant category for your course</p>
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="courseContent">Course Content</label>
-                        <textarea id="courseContent" class="form-control" placeholder="Enter the course content here..." required></textarea>
-                        <p class="form-hint">You can use HTML formatting in the content</p>
+                        <textarea id="courseContent" class="form-control" placeholder="Enter the course content here. Each line will become a separate paragraph." required></textarea>
+                        <p class="form-hint">Enter your content line by line. Each line will be converted to a paragraph.</p>
                     </div>
                     
                     <div class="form-group">
@@ -534,6 +576,28 @@
                 .substring(0, 30) + '-' + Date.now().toString().slice(-4);
         }
 
+        // Convert line breaks to paragraphs
+        function formatContentWithParagraphs(text) {
+            if (!text) return '';
+            
+            // Split by new lines and filter out empty lines
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            
+            // Wrap each line in a paragraph tag
+            return lines.map(line => `<p>${line.trim()}</p>`).join('');
+        }
+
+        // Get CSS class for category badge
+        function getCategoryClass(category) {
+            switch(category) {
+                case 'Traffic Laws': return 'category-traffic';
+                case 'Road Signs': return 'category-signs';
+                case 'Safe Driving': return 'category-safe';
+                case 'Vehicle Operation': return 'category-operation';
+                default: return '';
+            }
+        }
+
         // Show notification message
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
@@ -555,10 +619,14 @@
             
             const courseNumber = document.getElementById('courseNumber').value;
             const courseTitle = document.getElementById('courseTitle').value;
+            const courseCategory = document.getElementById('courseCategory').value;
             const courseContent = document.getElementById('courseContent').value;
             const isPublic = document.getElementById('isPublic').checked;
             const courseId = generateCourseId(courseTitle);
             const creationDate = new Date().toISOString();
+            
+            // Format content with paragraphs
+            const formattedContent = formatContentWithParagraphs(courseContent);
             
             // Disable submit button to prevent multiple submissions
             const submitBtn = document.getElementById('submit-btn');
@@ -570,7 +638,9 @@
                 await db.collection('courses').doc(courseId).set({
                     courseNumber: courseNumber,
                     title: courseTitle,
-                    content: courseContent,
+                    category: courseCategory,
+                    content: courseContent, // Store original content
+                    formattedContent: formattedContent, // Store formatted content with paragraphs
                     public: isPublic,
                     creationDate: creationDate,
                     url: `course-${courseId}`
@@ -616,11 +686,16 @@
                 let coursesHTML = '';
                 snapshot.forEach(doc => {
                     const course = doc.data();
+                    const categoryClass = getCategoryClass(course.category);
+                    
                     coursesHTML += `
                         <div class="course-item">
                             <div class="course-info">
                                 <h4>${course.courseNumber}: ${course.title}</h4>
-                                <p>Created: ${new Date(course.creationDate).toLocaleDateString()}</p>
+                                <p>
+                                    <span class="category-badge ${categoryClass}">${course.category}</span>
+                                    Created: ${new Date(course.creationDate).toLocaleDateString()}
+                                </p>
                                 <p>Status: ${course.public ? 'Public' : 'Subscribers Only'}</p>
                             </div>
                             <div class="course-actions">
@@ -641,4 +716,4 @@
         document.addEventListener('DOMContentLoaded', loadCourses);
     </script>
 </body>
-</html>
+    </html>
