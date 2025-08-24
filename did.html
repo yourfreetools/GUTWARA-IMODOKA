@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igazeti - GUTWARA-IMODOKA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .doc-title {
+            font-size: 1.4rem;
+            margin: 10px 0;
+            color: #e3f2fd;
+            font-weight: 500;
+        }
+        
+        .status-indicators {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .status {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status.online {
+            background: #4caf50;
+        }
+        
+        .status.offline {
+            background: #ff9800;
+        }
+        
+        .status.expiry {
+            background: #f44336;
+        }
+        
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .page-info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .page-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-input {
+            width: 70px;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .go-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .viewer-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .ctrl-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .pdf-container {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            flex-wrap: wrap;
+        }
+        
+        .main-nav-btn {
+            padding: 12px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px;
+        }
+        
+        .main-nav-btn:hover {
+            background: #283593;
+            transform: translateY(-2px);
+        }
+        
+        .message {
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px;
+            display: none;
+        }
+        
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .message.info {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            color: #1a237e;
+        }
+        
+        .loading p {
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .storage-info {
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 5px;
+            margin: 15px;
+            font-size: 14px;
+        }
+        
+        footer {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .status-indicators, .pagination, .viewer-controls {
+                margin-top: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .main-nav-btn, .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .page-selector {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1><i class="fas fa-newspaper"></i> Igazeti</h1>
+                    <div class="doc-title" id="docTitle">Loading Igazeti...</div>
+                    <div class="status-indicators">
+                        <div class="status online" id="onlineStatus">
+                            <i class="fas fa-wifi"></i> Online
+                        </div>
+                        <div class="status offline" id="offlineStatus" style="display: none;">
+                            <i class="fas fa-wifi-slash"></i> Offline
+                        </div>
+                        <div class="status expiry" id="expiryStatus">
+                            <i class="fas fa-clock"></i> Expires in: <span id="expiryDays">30</span> days
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination">
+                    <button class="nav-btn" onclick="changePage(-1)" id="prevBtn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <div class="page-info">Page <span id="currentPage">1</span> of 106</div>
+                    <button class="nav-btn" onclick="changePage(1)" id="nextBtn">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="page-selector">
+                        <input type="number" class="page-input" id="pageInput" min="1" max="106" value="1">
+                        <button class="go-btn" onclick="goToPage()">Go</button>
+                    </div>
+                </div>
+            </div>
+            <div class="viewer-controls">
+                <button class="ctrl-btn" onclick="toggleFitMode()">
+                    <i class="fas fa-expand"></i> Toggle Fit
+                </button>
+                <button class="ctrl-btn" onclick="zoomIn()">
+                    <i class="fas fa-search-plus"></i> Zoom In
+                </button>
+                <button class="ctrl-btn" onclick="zoomOut()">
+                    <i class="fas fa-search-minus"></i> Zoom Out
+                </button>
+            </div>
+        </header>
+        
+        <div id="message" class="message">
+            <p id="messageText"></p>
+        </div>
+        
+        <div class="storage-info" id="storageInfo">
+            <p><i class="fas fa-info-circle"></i> This Igazeti will be saved for offline access and will expire in 30 days.</p>
+        </div>
+        
+        <div class="pdf-container">
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p id="loadingText">Loading Igazeti...</p>
+            </div>
+            <iframe class="pdf-viewer" id="pdfViewer" style="display: none;"></iframe>
+        </div>
+        
+        <div class="navigation">
+            <button class="main-nav-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </button>
+            <button class="main-nav-btn" onclick="clearOfflineStorage()">
+                <i class="fas fa-trash"></i> Clear Offline Copy
+            </button>
+            <button class="main-nav-btn" onclick="window.location.reload()">
+                <i class="fas fa-sync"></i> Reload Document
+            </button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Igazeti Viewer for GUTWARA-IMODOKA | &copy; 2023</p>
+    </footer>
+
+    <script>
+        // Configuration
+        const TOTAL_PAGES = 106;
+        const BASE_URL = "https://github.com/yourfreetools/GUTWARA-IMODOKA/blob/2df7b4e31d50a20042b5d769d287ee89f2ee5003/Igazeti/Igazeti_page_";
+        const EXPIRY_DAYS = 30;
+        
+        // State variables
+        let currentPage = 1;
+        let currentZoom = 100;
+        let fitToWidth = true;
+        let isOnline = true;
+        let pdfBlobUrl = null;
+        
+        // Initialize the viewer
+        function initViewer() {
+            // Set up online/offline detection
+            updateOnlineStatus();
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            
+            // Try to load from URL parameters first
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageParam = parseInt(urlParams.get('page')) || 1;
+            
+            // Set the current page
+            currentPage = Math.max(1, Math.min(TOTAL_PAGES, pageParam));
+            document.getElementById('currentPage').textContent = currentPage;
+            document.getElementById('pageInput').value = currentPage;
+            
+            // Load the PDF
+            loadCurrentPage();
+            
+            // Update UI
+            updatePagination();
+        }
+        
+        // Generate URL for a specific page
+        function getPageUrl(pageNumber) {
+            return `${BASE_URL}${pageNumber}.pdf`;
+        }
+        
+        // Generate Google Viewer URL for a specific page
+        function getViewerUrl(pageNumber) {
+            const pdfUrl = getPageUrl(pageNumber);
+            const rawUrl = pdfUrl
+                .replace('github.com', 'raw.githubusercontent.com')
+                .replace('/blob/', '/');
+            return `https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(rawUrl)}&embedded=true`;
+        }
+        
+        // Load the current page
+        function loadCurrentPage() {
+            const loading = document.getElementById('loading');
+            const loadingText = document.getElementById('loadingText');
+            const iframeViewer = document.getElementById('pdfViewer');
+            
+            // Show loading indicator
+            loading.style.display = 'block';
+            iframeViewer.style.display = 'none';
+            hideMessage();
+            
+            // Update title
+            document.getElementById('docTitle').textContent = `Igazeti - Page ${currentPage}`;
+            document.title = `Igazeti Page ${currentPage} - GUTWARA-IMODOKA`;
+            
+            // Check if we have an offline copy
+            const offlineData = getOfflinePage(currentPage);
+            
+            if (offlineData && (!isOnline || offlineData.url === getPageUrl(currentPage))) {
+                // Use offline copy
+                loadingText.textContent = 'Loading from offline storage...';
+                iframeViewer.src = offlineData.dataUrl;
+                iframeViewer.onload = function() {
+                    loading.style.display = 'none';
+                    iframeViewer.style.display = 'block';
+                    applyZoom();
+                    showMessage('Loaded from offline storage.', 'info');
+                };
+            } else {
+                // Load from network
+                loadingText.textContent = 'Downloading Igazeti...';
+                const viewerUrl = getViewerUrl(currentPage);
+                
+                iframeViewer.src = viewerUrl;
+                iframeViewer.onload = function() {
+                    loading.style.display = 'none';
+                    iframeViewer.style.display = 'block';
+                    applyZoom();
+                    
+                    // Save for offline use
+                    savePageOffline(currentPage);
+                };
+                
+                iframeViewer.onerror = function() {
+                    loading.style.display = 'none';
+                    showMessage('Failed to load the Igazeti page. Please check your internet connection.', 'error');
+                };
+            }
+        }
+        
+        // Save page for offline use
+        function savePageOffline(pageNumber) {
+            try {
+                const pageData = {
+                    url: getPageUrl(pageNumber),
+                    dataUrl: getViewerUrl(pageNumber),
+                    timestamp: new Date().getTime(),
+                    page: pageNumber
+                };
+                
+                localStorage.setItem(`igazeti_page_${pageNumber}`, JSON.stringify(pageData));
+                
+                // Update expiry info
+                updateExpiryInfo();
+                
+            } catch (e) {
+                console.error('Error saving page offline:', e);
+            }
+        }
+        
+        // Get offline page if available and valid
+        function getOfflinePage(pageNumber) {
+            try {
+                const item = localStorage.getItem(`igazeti_page_${pageNumber}`);
+                if (!item) return null;
+                
+                const data = JSON.parse(item);
+                
+                // Check if data is expired (30 days)
+                const storedTime = data.timestamp;
+                const currentTime = new Date().getTime();
+                const diffTime = currentTime - storedTime;
+                const diffDays = diffTime / (1000 * 60 * 60 * 24);
+                
+                if (diffDays <= EXPIRY_DAYS) {
+                    return data;
+                } else {
+                    // Remove expired data
+                    localStorage.removeItem(`igazeti_page_${pageNumber}`);
+                    return null;
+                }
+            } catch (e) {
+                console.error('Error retrieving offline page:', e);
+                return null;
+            }
+        }
+        
+        // Update expiry information
+        function updateExpiryInfo() {
+            try {
+                let earliestTimestamp = null;
+                
+                // Find the earliest saved timestamp
+                for (let i = 1; i <= TOTAL_PAGES; i++) {
+                    const item = localStorage.getItem(`igazeti_page_${i}`);
+                    if (item) {
+                        const data = JSON.parse(item);
+                        if (!earliestTimestamp || data.timestamp < earliestTimestamp) {
+                            earliestTimestamp = data.timestamp;
+                        }
+                    }
+                }
+                
+                if (earliestTimestamp) {
+                    const currentTime = new Date().getTime();
+                    const diffTime = currentTime - earliestTimestamp;
+                    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+                    const remainingDays = Math.max(0, Math.floor(EXPIRY_DAYS - diffDays));
+                    
+                    document.getElementById('expiryDays').textContent = remainingDays;
+                }
+            } catch (e) {
+                console.error('Error updating expiry info:', e);
+            }
+        }
+        
+        // Clear offline storage
+        function clearOfflineStorage() {
+            try {
+                for (let i = 1; i <= TOTAL_PAGES; i++) {
+                    localStorage.removeItem(`igazeti_page_${i}`);
+                }
+                showMessage('Offline copies cleared. Page will reload.', 'info');
+                
+                // Reload after a short delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } catch (e) {
+                console.error('Error clearing offline storage:', e);
+                showMessage('Error clearing offline storage.', 'error');
+            }
+        }
+        
+        // Change page
+        function changePage(delta) {
+            const newPage = currentPage + delta;
+            if (newPage >= 1 && newPage <= TOTAL_PAGES) {
+                currentPage = newPage;
+                updatePagination();
+                loadCurrentPage();
+                
+                // Update URL without reloading
+                const url = new URL(window.location);
+                url.searchParams.set('page', currentPage);
+                window.history.pushState({}, '', url);
+            }
+        }
+        
+        // Go to specific page
+        function goToPage() {
+            const pageInput = document.getElementById('pageInput');
+            const pageNum = parseInt(pageInput.value);
+            
+            if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= TOTAL_PAGES) {
+                currentPage = pageNum;
+                updatePagination();
+                loadCurrentPage();
+                
+                // Update URL without reloading
+                const url = new URL(window.location);
+                url.searchParams.set('page', currentPage);
+                window.history.pushState({}, '', url);
+            } else {
+                showMessage('Please enter a valid page number between 1 and 106.', 'error');
+            }
+        }
+        
+        // Update pagination controls
+        function updatePagination() {
+            document.getElementById('currentPage').textContent = currentPage;
+            document.getElementById('pageInput').value = currentPage;
+            document.getElementById('prevBtn').disabled = currentPage <= 1;
+            document.getElementById('nextBtn').disabled = currentPage >= TOTAL_PAGES;
+        }
+        
+        // Toggle fit mode
+        function toggleFitMode() {
+            fitToWidth = !fitToWidth;
+            applyZoom();
+        }
+        
+        // Zoom functions
+        function zoomIn() {
+            currentZoom += 10;
+            applyZoom();
+        }
+        
+        function zoomOut() {
+            currentZoom = Math.max(50, currentZoom - 10);
+            applyZoom();
+        }
+        
+        function applyZoom() {
+            const iframeViewer = document.getElementById('pdfViewer');
+            if (fitToWidth) {
+                iframeViewer.style.zoom = '100%';
+                iframeViewer.style.width = '100%';
+            } else {
+                iframeViewer.style.zoom = `${currentZoom}%`;
+                iframeViewer.style.width = `${currentZoom}%`;
+            }
+        }
+        
+        // Check online status
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                document.getElementById('onlineStatus').style.display = 'flex';
+                document.getElementById('offlineStatus').style.display = 'none';
+            } else {
+                document.getElementById('onlineStatus').style.display = 'none';
+                document.getElementById('offlineStatus').style.display = 'flex';
+                showMessage('You are offline. Using cached version if available.', 'info');
+            }
+        }
+        
+        // Show message
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            const messageText = document.getElementById('messageText');
+            
+            messageText.textContent = text;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'info') {
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Hide message
+        function hideMessage() {
+            document.getElementById('message').style.display = 'none';
+        }
+        
+        // Go back to the list
+        function goBack() {
+            window.location.href = 'pdfdisplay.html';
+        }
+        
+        // Initialize the viewer when page loads
+        window.onload = initViewer;
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageParam = parseInt(urlParams.get('page')) || 1;
+            currentPage = Math.max(1, Math.min(TOTAL_PAGES, pageParam));
+            updatePagination();
+            loadCurrentPage();
+        });
+    </script>
+</body>
+</html>
