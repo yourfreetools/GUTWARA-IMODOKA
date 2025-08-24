@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en-RW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibizamini - Icyemezo Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: #1a237e;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffc107;
+            color: #1a237e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffc107;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #1a237e;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: #1a237e;
+        }
+        
+        .btn-primary:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Tests Content */
+        .tests {
+            padding: 40px 0;
+        }
+        
+        .tests-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .tests-header h2 {
+            color: #1a237e;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .tests-header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .create-test-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #1a237e;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        
+        .create-test-btn:hover {
+            background: #3949ab;
+        }
+        
+        /* Tests Grid */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .test-image {
+            height: 160px;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+        
+        .test-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .test-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+        
+        .test-description {
+            color: #666;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+        
+        .test-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: auto;
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .meta-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a237e;
+        }
+        
+        .meta-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .test-link {
+            padding: 10px;
+            background: #1a237e;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .test-link:hover {
+            background: #3949ab;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        
+        .no-results h3 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+            grid-column: 1 / -1;
+        }
+        
+        .loading i {
+            margin-right: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 30px 0 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #ffc107;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-column a {
+            color: #e3e3e3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e3e3e3;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Icyemezo Drive</h1>
+                </div>
+                
+                <div class="user-welcome">
+                    <div class="user-avatar" id="user-avatar">JD</div>
+                    <span>Muraho, <span id="user-name">John Doe</span></span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Ahabanza</a></li>
+                        <li><a href="courses.html">Amasomo</a></li>
+                        <li><a href="practice-tests.html" class="active">Ibizamini</a></li>
+                        <li><a href="contact.html">Twandikire</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="logout()">Gusohoka</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tests Content -->
+    <section class="tests">
+        <div class="container">
+            <div class="tests-header">
+                <h2>Ibizamini byo kwimenyereza</h2>
+                <p>Isuzume aho ugeze wiga amategeko y'umuhanda</p>
+        
+            </div>
+            
+            <div class="tests-grid" id="tests-container">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Tegereza ibizamini...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Icyemezo Drive</h3>
+                    <p>Gufasha abanyarwanda kubaho neza. Abatwazi bafite ubumenyi buhagije</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Ibyihutirwa</h3>
+                    <ul>
+                        <li><a href="index.html">Ahabanza</a></li>
+                        <li><a href="courses.html">Amasomo</a></li>
+                        <li><a href="practice-tests.html">Ibizamini</a></li>
+                        <li><a href="pricing.html">Ibiciro</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Ubufasha</h3>
+                    <ul>
+                        <li><a href="help-center.html">Aho wafashirizwa</a></li>
+                        <li><a href="contact.html">Twandikire</a></li>
+                        <li><a href="payment-issues.html">Ibibazo mu kwishyura</a></li>
+                        <li><a href="faq.html">Ibibazo byabajijwe</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Twandikire</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +250 783 669 165</li>
+                        <li><i class="fas fa-envelope"></i> icyemezodrive@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Icyemezo Drive.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase App (core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFi1WlWZ1r87jI1PWLVVxnuz3o_1y8Pyo",
+            authDomain: "icyemezodrive.firebaseapp.com",
+            projectId: "icyemezodrive",
+            storageBucket: "icyemezodrive.firebasestorage.app",
+            messagingSenderId: "691489188647",
+            appId: "1:691489188647:web:7f26f35d8dee6552ecd702",
+            measurementId: "G-P4QX5DKD9Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Get user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('user'));
+        
+        // Check if user is logged in
+        if (!userData) {
+            window.location.href = 'login.html';
+        }
+
+        // Display user information
+        function displayUserInfo() {
+            if (userData) {
+                document.getElementById('user-name').textContent = userData.fullName;
+                const initials = userData.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+                document.getElementById('user-avatar').textContent = initials;
+            }
+        }
+
+        // Display tests
+        function displayTests(tests) {
+            const testsContainer = document.getElementById('tests-container');
+            
+            if (!tests || tests.length === 0) {
+                testsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Nta bizamini bihari</h3>
+                        <p>Nta bizamini byabonetse aka kanya. Ongera ugerageze mukanya</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let testsHTML = '';
+            
+            tests.forEach((test) => {
+                testsHTML += `
+                    <div class="test-card">
+                        <div class="test-image">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3 class="test-title">${test.title || 'Untitled Test'}</h3>
+                            <p class="test-description">${test.description || 'Isuzume ukoresheje iki kizamini.'}</p>
+                            
+                            <div class="test-meta">
+                                <div class="meta-item">
+                                    <span class="meta-value">${test.totalMarks || 0}</span>
+                                    <span class="meta-label">Amanota</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-value">${test.timeLimit || 0}</span>
+                                    <span class="meta-label">Iminota y'ikizamini</span>
+                                </div>
+                            </div>
+                            
+                            <a href="take-test.html?id=${test.id}" class="test-link">Tangira ikizamini</a>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            testsContainer.innerHTML = testsHTML;
+        }
+
+        // Load tests from Firestore
+        function loadTests() {
+            const testsContainer = document.getElementById('tests-container');
+            testsContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Tegereza ibizamini...</div>';
+            
+            db.collection('practiceTests').get().then((querySnapshot) => {
+                const tests = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const testData = doc.data();
+                    tests.push({
+                        id: doc.id,
+                        ...testData
+                    });
+                });
+                
+                // Display the tests
+                displayTests(tests);
+                
+            }).catch((error) => {
+                console.error("Error loading tests: ", error);
+                testsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Habayemo ikosa mukuzana ibizamini</h3>
+                        <p>Reba niba ufite interineti cyangwa ugerageze mukanya.</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Initialize the page
+        function initPage() {
+            displayUserInfo();
+            loadTests();
+        }
+
+        // Start everything when the page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+  </html>
